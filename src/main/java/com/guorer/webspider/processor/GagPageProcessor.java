@@ -44,6 +44,7 @@ public class GagPageProcessor implements PageProcessor {
                 .setDownloader(new JSONDownloader())
                 .setPipelines(Lists.newArrayList(new GagPipeline()))
                 .addUrl("https://9gag.com/v1/group-posts/group/default/type/hot")
+                .thread(2)
                 .run();
     }
 }
