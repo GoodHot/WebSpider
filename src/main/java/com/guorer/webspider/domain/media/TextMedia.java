@@ -8,6 +8,8 @@ import lombok.ToString;
 @ToString
 public class TextMedia extends AbstractMedia {
 
+    private String text;
+
     @Override
     public StoreTypeEnum getType() {
         return StoreTypeEnum.TEXT;

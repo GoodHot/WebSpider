@@ -20,17 +20,18 @@ public class JSONDownloader extends AbstractDownloader {
         }
         HttpRequest req = HttpRequest.get(request.getUrl());
         Page page = new Page();
-        try{
+        try {
             String body = req.body();
             page.setBytes(body.getBytes());
             page.setCharset(req.charset());
             page.setRawText(body);
-            page.setUrl(new PlainText(request.getUrl()));page.setRequest(request);
+            page.setUrl(new PlainText(request.getUrl()));
+            page.setRequest(request);
             page.setStatusCode(200);
             page.setDownloadSuccess(true);
             onSuccess(request);
             logger.info("downloading page success {}", request.getUrl());
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.warn("download page {} error", request.getUrl(), e);
             onError(request);
             return Page.fail();

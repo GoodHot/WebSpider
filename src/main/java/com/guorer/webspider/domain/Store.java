@@ -12,7 +12,7 @@ import java.util.List;
 public class Store {
 
     /**
-     * 来源
+     * 来源，coub, 9gag, reddit, imgur
      */
     private String source;
 
@@ -22,7 +22,7 @@ public class Store {
     private Date created;
 
     /**
-     * 封面图片
+     * 封面图片(url)
      */
     private String poster;
 
