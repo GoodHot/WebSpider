@@ -1,6 +1,6 @@
-package com.guorer.webspider.domain;
+package com.goodHot.fun.webspider.domain;
 
-import com.guorer.webspider.domain.media.AbstractMedia;
+import com.goodHot.fun.webspider.domain.media.AbstractMedia;
 import lombok.Data;
 import lombok.ToString;
 

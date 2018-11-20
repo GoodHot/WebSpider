@@ -1,6 +1,6 @@
-package com.guorer.webspider.domain.media;
+package com.goodHot.fun.webspider.domain.media;
 
-import com.guorer.webspider.enums.StoreTypeEnum;
+import com.goodHot.fun.webspider.enums.StoreTypeEnum;
 import lombok.Data;
 import lombok.ToString;
 
