@@ -2,17 +2,15 @@ package com.goodHot.fun.spider.processor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.goodHot.fun.spider.downloader.JSONDownloader;
-import com.goodHot.fun.spider.pipeline.CoubPipeline;
-import org.assertj.core.util.Lists;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Service
 public class CoubPageProcessor implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
@@ -38,11 +36,11 @@ public class CoubPageProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
-        Spider.create(new CoubPageProcessor())
-                .setDownloader(new JSONDownloader())
-                .setPipelines(Lists.newArrayList(new CoubPipeline()))
-                .addUrl("https://coub.com/api/v2/timeline/hot/weekly?page=1")
-                .run();
-    }
+//    public static void main(String[] args) {
+//        Spider.create(new CoubPageProcessor())
+//                .setDownloader(new JSONDownloader())
+//                .setPipelines(Lists.newArrayList(new CoubPipeline()))
+//                .addUrl("https://coub.com/api/v2/timeline/hot/weekly?page=1")
+//                .run();
+//    }
 }

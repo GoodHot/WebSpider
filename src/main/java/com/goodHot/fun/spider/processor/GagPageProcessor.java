@@ -1,26 +1,36 @@
 package com.goodHot.fun.spider.processor;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.goodHot.fun.spider.downloader.JSONDownloader;
-import com.goodHot.fun.spider.pipeline.GagPipeline;
-import org.assertj.core.util.Lists;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GagPageProcessor implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
+    private AtomicInteger count = new AtomicInteger(0);
+
+    private int size;
+
+    public GagPageProcessor(int size){
+        this.size = size;
+    }
+
     @Override
     public void process(Page page) {
         JSONObject json = JSON.parseObject(page.getJson().get());
-        page.putField("posts", json.getJSONObject("data").getJSONArray("posts"));
+        JSONArray posts = json.getJSONObject("data").getJSONArray("posts");
+        page.putField("posts", posts);
+        if(count.addAndGet(posts.size()) >= size){
+            return ;
+        }
         String nextPage = json.getJSONObject("data").getString("nextCursor");
         StringBuilder nextURL = new StringBuilder();
         try {
@@ -38,13 +48,4 @@ public class GagPageProcessor implements PageProcessor {
         return site;
     }
 
-    public static void main(String[] args) {
-//        Spider.create(new GagPageProcessor()).setDownloader(new PageDownloader()).addUrl("https://9gag.com/v1/group-posts/group/default/type/hot").run();
-        Spider.create(new GagPageProcessor())
-                .setDownloader(new JSONDownloader())
-                .setPipelines(Lists.newArrayList(new GagPipeline()))
-                .addUrl("https://9gag.com/v1/group-posts/group/default/type/hot")
-                .thread(2)
-                .run();
-    }
 }

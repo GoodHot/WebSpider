@@ -6,6 +6,7 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
 public class GagPipeline implements Pipeline {
+
     @Override
     public void process(ResultItems resultItems, Task task) {
         JSONArray posts = resultItems.get("posts");

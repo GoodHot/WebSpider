@@ -1,15 +1,15 @@
-package com.goodHot.fun.dto;
+package com.goodHot.fun.dto.req;
 
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @ToString
-public class SpiderConfDTO {
+public class SpiderReq {
 
     /**
      * 抓取数量
      */
-    private String size;
+    private Integer size;
 
 }
