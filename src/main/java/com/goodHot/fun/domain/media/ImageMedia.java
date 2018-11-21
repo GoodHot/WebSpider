@@ -13,6 +13,6 @@ public class ImageMedia extends AbstractMedia {
     }
 
     private String url;
-    private MediaEnum type = MediaEnum.IMAGE;
+    private MediaEnum type = MediaEnum.JPEG;
 
 }

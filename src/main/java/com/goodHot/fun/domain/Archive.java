@@ -17,6 +17,11 @@ public class Archive {
     private String source;
 
     /**
+     * 唯一编码，去重使用
+     */
+    private String unique;
+
+    /**
      * 创建时间
      */
     private Date created;

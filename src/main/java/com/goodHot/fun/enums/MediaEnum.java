@@ -1,7 +1,7 @@
 package com.goodHot.fun.enums;
 
 public enum MediaEnum {
-    GIF(10), JPG(20), TEXT(30), MP4(40), COUB(50);
+    GIF(10), JPEG(20), TEXT(30), VIDEO(40), COUB(50);
 
     public Integer type;
 

@@ -1,4 +1,4 @@
-package com.goodHot.fun.webspider.pipeline;
+package com.goodHot.fun.spider.pipeline;
 
 import com.alibaba.fastjson.JSONArray;
 import us.codecraft.webmagic.ResultItems;

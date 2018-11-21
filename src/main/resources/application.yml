@@ -1,4 +1,12 @@
-data:
-  mongodb:
-    uri: mongodb://192.168.88.109/spiderDB
-    port: 27017
+spring:
+  data:
+    mongodb:
+      uri: mongodb://192.168.88.109/spiderDB
+      port: 27017
+
+
+spider:
+  gag:
+    url: https://9gag.com/v1/group-posts/group/default/type/hot
+  coub:
+    url: https://coub.com/api/v2/timeline/hot/weekly?page=1
