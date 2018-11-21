@@ -1,0 +1,4 @@
+data:
+  mongodb:
+    uri: mongodb://192.168.88.109/spiderDB
+    port: 27017

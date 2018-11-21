@@ -1,6 +1,6 @@
-package com.goodHot.fun.webspider.domain;
+package com.goodHot.fun.domain;
 
-import com.goodHot.fun.webspider.domain.media.AbstractMedia;
+import com.goodHot.fun.domain.media.AbstractMedia;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @ToString
-public class Store {
+public class Archive {
 
     /**
      * 来源，coub, 9gag, reddit, imgur
@@ -30,6 +30,11 @@ public class Store {
      * 标题
      */
     private String title;
+
+    /**
+     * 是否需要转码 true = 转码  false = 不转码
+     */
+    private Boolean transcoding;
 
     /**
      * 内容
