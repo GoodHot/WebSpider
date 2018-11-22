@@ -10,10 +10,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class GIFMedia extends AbstractMedia {
 
-    public GIFMedia(String url) {
-        this.url = url;
-    }
-
     private String url;
     private MediaEnum type = MediaEnum.GIF;
 

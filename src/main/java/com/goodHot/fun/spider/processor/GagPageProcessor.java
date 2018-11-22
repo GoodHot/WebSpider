@@ -40,7 +40,6 @@ public class GagPageProcessor implements PageProcessor {
             e.printStackTrace();
         }
         page.addTargetRequest(nextURL.toString());
-        System.out.println("==========================");
     }
 
     @Override

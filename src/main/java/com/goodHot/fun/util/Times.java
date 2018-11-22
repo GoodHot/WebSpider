@@ -8,4 +8,8 @@ public class Times {
         return new Date();
     }
 
+    public static final Date timeForMS(Long ms){
+        return new Date(ms * 1000);
+    }
+
 }
