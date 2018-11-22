@@ -50,6 +50,14 @@
         </dependency>
         <!--/tool-->
 
+        <!--trie tree-->
+        <dependency>
+            <groupId>com.github.takawitter</groupId>
+            <artifactId>trie4j</artifactId>
+            <version>0.9.8</version>
+        </dependency>
+        <!--/trie tree-->
+
         <!--spider-->
         <dependency>
             <groupId>us.codecraft</groupId>

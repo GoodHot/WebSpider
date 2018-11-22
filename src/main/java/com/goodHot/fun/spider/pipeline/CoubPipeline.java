@@ -1,11 +1,15 @@
 package com.goodHot.fun.spider.pipeline;
 
 import com.alibaba.fastjson.JSONArray;
+import com.goodHot.fun.repository.SpiderIndexRepository;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
-import us.codecraft.webmagic.pipeline.Pipeline;
 
-public class CoubPipeline implements Pipeline {
+public class CoubPipeline extends BasePipeline {
+
+    public CoubPipeline(SpiderIndexRepository spiderIndexRepository) {
+        super(spiderIndexRepository);
+    }
 
     @Override
     public void process(ResultItems resultItems, Task task) {
@@ -15,4 +19,8 @@ public class CoubPipeline implements Pipeline {
         });
     }
 
+    @Override
+    public String getSpiderName() {
+        return "coub";
+    }
 }

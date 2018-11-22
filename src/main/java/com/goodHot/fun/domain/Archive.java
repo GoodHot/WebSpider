@@ -3,6 +3,7 @@ package com.goodHot.fun.domain;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.List;
 @Data
 @ToString
 public class Archive {
+
+    @Id
+    private String id;
 
     /**
      * 来源，coub, 9gag, reddit, imgur

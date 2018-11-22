@@ -7,17 +7,21 @@ import com.goodHot.fun.domain.media.AbstractMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.repository.ArchiveRepository;
+import com.goodHot.fun.repository.SpiderIndexRepository;
+import com.goodHot.fun.util.Encrypts;
 import com.goodHot.fun.util.Times;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
-import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.util.List;
 
-public class GagPipeline implements Pipeline {
+@Slf4j
+public class GagPipeline extends BasePipeline {
 
-    public GagPipeline(ArchiveRepository archiveRepository){
+    public GagPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveRepository archiveRepository) {
+        super(spiderIndexRepository);
         this.archiveRepository = archiveRepository;
     }
 
@@ -34,6 +38,13 @@ public class GagPipeline implements Pipeline {
             archive.setCreated(Times.timeForMS(post.getLongValue("creationTs")));
             archive.setTitle(post.getString("title"));
             archive.setTranscoding(false);
+            archive.setUnique(Encrypts.md5(archive.getSource()));
+
+            if (super.isExists(archive.getUnique())) {
+                log.warn("[GAG Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
+                continue;
+            }
+
             JSONObject image = post.getJSONObject("images").getJSONObject("image700");
             if (image == null) {
                 image = post.getJSONObject("images").getJSONObject("image460");
@@ -54,8 +65,15 @@ public class GagPipeline implements Pipeline {
                 medias.add(mp4);
             }
             archive.setMedias(medias);
+            log.info("[GAG Spider] get content: " + archive);
             archives.add(archive);
         }
+        super.saveTree();
         archiveRepository.insert(archives);
+    }
+
+    @Override
+    public String getSpiderName() {
+        return "gag";
     }
 }
