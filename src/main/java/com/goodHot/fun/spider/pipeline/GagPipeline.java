@@ -6,6 +6,7 @@ import com.goodHot.fun.domain.Archive;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
+import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.SpiderIndexRepository;
 import com.goodHot.fun.util.Encrypts;
@@ -39,7 +40,7 @@ public class GagPipeline extends BasePipeline {
             archive.setTitle(post.getString("title"));
             archive.setTranscoding(false);
             archive.setUnique(Encrypts.md5(archive.getSource()));
-
+            archive.setStatus(ArchiveEnum.Status.WAIT.status);
             if (super.isExists(archive.getUnique())) {
                 log.warn("[GAG Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
                 continue;

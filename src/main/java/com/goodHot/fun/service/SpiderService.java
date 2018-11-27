@@ -4,4 +4,6 @@ import com.goodHot.fun.dto.req.SpiderReq;
 
 public interface SpiderService {
     Boolean startGag(SpiderReq req);
+
+    Boolean startCoub(SpiderReq req);
 }

@@ -23,5 +23,10 @@ public class SpiderRest {
         return RestResult.ok(spiderService.startGag(req));
     }
 
+    @PostMapping("coub")
+    public RestResult coub(@RequestBody SpiderReq req) {
+        return RestResult.ok(spiderService.startCoub(req));
+    }
+
 
 }

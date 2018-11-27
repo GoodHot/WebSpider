@@ -23,4 +23,10 @@ public class ArchiveRest {
         return RestResult.ok(page);
     }
 
+    @PostMapping("/approval/{id}")
+    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
+    public RestResult approval(@PathVariable("id")String id, Boolean status){
+        return RestResult.ok();
+    }
+
 }

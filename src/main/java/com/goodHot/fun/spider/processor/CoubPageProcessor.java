@@ -1,24 +1,36 @@
 package com.goodHot.fun.spider.processor;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 
-@Service
 public class CoubPageProcessor implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
+    private AtomicInteger count = new AtomicInteger(0);
+
+    private int size;
+
+    public CoubPageProcessor(int size) {
+        this.size = size;
+    }
+
     @Override
     public void process(Page page) {
         JSONObject json = JSON.parseObject(page.getJson().get());
-        page.putField("posts", json.getJSONArray("coubs"));
+        JSONArray coubs = json.getJSONArray("coubs");
+        page.putField("posts", coubs);
+        if (count.addAndGet(coubs.size()) >= size) {
+            return;
+        }
         Integer nextPage = json.getInteger("page");
         StringBuilder nextURL = new StringBuilder();
         try {
@@ -35,6 +47,10 @@ public class CoubPageProcessor implements PageProcessor {
     public Site getSite() {
         return site;
     }
+
+
+//    <iframe src="//coub.com/embed/1gvdzr?muted=false&autostart=false&originalSize=false&startWithHD=false" allowfullscreen frameborder="0" width="640" height="360" allow="autoplay"></iframe>
+
 
 //    public static void main(String[] args) {
 //        Spider.create(new CoubPageProcessor())

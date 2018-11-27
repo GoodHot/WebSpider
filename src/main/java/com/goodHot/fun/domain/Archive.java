@@ -46,6 +46,11 @@ public class Archive {
     private Boolean transcoding;
 
     /**
+     * 状态 10 = 等待审核  20 = 不通过  30 = 通过
+     */
+    private Integer status;
+
+    /**
      * 内容
      */
     private List<AbstractMedia> medias;

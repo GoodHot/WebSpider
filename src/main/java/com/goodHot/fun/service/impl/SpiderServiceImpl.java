@@ -7,7 +7,9 @@ import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.SpiderIndexRepository;
 import com.goodHot.fun.service.SpiderService;
 import com.goodHot.fun.spider.downloader.JSONDownloader;
+import com.goodHot.fun.spider.pipeline.CoubPipeline;
 import com.goodHot.fun.spider.pipeline.GagPipeline;
+import com.goodHot.fun.spider.processor.CoubPageProcessor;
 import com.goodHot.fun.spider.processor.GagPageProcessor;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,9 @@ public class SpiderServiceImpl implements SpiderService {
 
     private static final String GAG_RUNNING_LOCK_KEY = "GAG_SPIDER_RUNNING_LOCK";
 
-    private static final ExecutorService SPIDER_POOL = Executors.newSingleThreadExecutor();
+    private static final String COUB_RUNNING_LOCK_KEY = "COUB_RUNNING_LOCK_KEY";
+
+    private static final ExecutorService SPIDER_POOL = Executors.newFixedThreadPool(4);
 
     @Override
     public Boolean startGag(SpiderReq req) {
@@ -53,5 +57,22 @@ public class SpiderServiceImpl implements SpiderService {
 
         });
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean startCoub(SpiderReq req) {
+        String running = redisTemplate.opsForValue().get(COUB_RUNNING_LOCK_KEY);
+        ExceptionHelper.param(running != null, "COUB爬虫正在运行");
+        SPIDER_POOL.execute(() -> {
+            redisTemplate.opsForValue().set(COUB_RUNNING_LOCK_KEY, "running");
+            Spider.create(new CoubPageProcessor(req.getSize()))
+                    .setDownloader(new JSONDownloader())
+                    .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveRepository)))
+                    .addUrl(config.getCoub().getUrl())
+                    .thread(1)
+                    .run();
+            redisTemplate.delete(COUB_RUNNING_LOCK_KEY);
+        });
+        return null;
     }
 }
