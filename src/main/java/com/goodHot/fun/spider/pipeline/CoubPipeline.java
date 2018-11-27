@@ -51,6 +51,7 @@ public class CoubPipeline extends BasePipeline {
             }
             CoubEmbedMedia media = new CoubEmbedMedia("//coub.com/embed/" + post.getString("permalink"));
             archive.setMedias(Lists.newArrayList(media));
+            log.info("[COUB Spider] get content: " + archive);
             archives.add(archive);
         }
         super.saveTree();
