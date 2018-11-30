@@ -7,8 +7,8 @@ import com.goodHot.fun.domain.media.AbstractMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.enums.ArchiveEnum;
-import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.SpiderIndexRepository;
+import com.goodHot.fun.service.ArchiveService;
 import com.goodHot.fun.util.Encrypts;
 import com.goodHot.fun.util.Times;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,12 @@ import java.util.List;
 @Slf4j
 public class GagPipeline extends BasePipeline {
 
-    public GagPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveRepository archiveRepository) {
+    public GagPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService) {
         super(spiderIndexRepository);
-        this.archiveRepository = archiveRepository;
+        this.archiveService = archiveService;
     }
 
-    private ArchiveRepository archiveRepository;
+    private ArchiveService archiveService;
 
     @Override
     public void process(ResultItems resultItems, Task task) {
@@ -70,7 +70,7 @@ public class GagPipeline extends BasePipeline {
             archives.add(archive);
         }
         super.saveTree();
-        archiveRepository.insert(archives);
+        archiveService.insertForTranslate(archives);
     }
 
     @Override

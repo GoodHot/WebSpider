@@ -28,5 +28,4 @@ public class SpiderRest {
         return RestResult.ok(spiderService.startCoub(req));
     }
 
-
 }

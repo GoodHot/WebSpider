@@ -3,8 +3,8 @@ package com.goodHot.fun.service.impl;
 import com.goodHot.fun.conf.SpiderConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
 import com.goodHot.fun.exception.ExceptionHelper;
-import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.SpiderIndexRepository;
+import com.goodHot.fun.service.ArchiveService;
 import com.goodHot.fun.service.SpiderService;
 import com.goodHot.fun.spider.downloader.JSONDownloader;
 import com.goodHot.fun.spider.pipeline.CoubPipeline;
@@ -30,7 +30,7 @@ public class SpiderServiceImpl implements SpiderService {
     private StringRedisTemplate redisTemplate;
 
     @Autowired
-    private ArchiveRepository archiveRepository;
+    private ArchiveService archiveService;
 
     @Autowired
     private SpiderIndexRepository spiderIndexRepository;
@@ -49,7 +49,7 @@ public class SpiderServiceImpl implements SpiderService {
             redisTemplate.opsForValue().set(GAG_RUNNING_LOCK_KEY, "running");
             Spider.create(new GagPageProcessor(req.getSize()))
                     .setDownloader(new JSONDownloader())
-                    .setPipelines(Lists.newArrayList(new GagPipeline(spiderIndexRepository, archiveRepository)))
+                    .setPipelines(Lists.newArrayList(new GagPipeline(spiderIndexRepository, archiveService)))
                     .addUrl(config.getGag().getUrl())
                     .thread(1)
                     .run();
@@ -67,7 +67,7 @@ public class SpiderServiceImpl implements SpiderService {
             redisTemplate.opsForValue().set(COUB_RUNNING_LOCK_KEY, "running");
             Spider.create(new CoubPageProcessor(req.getSize()))
                     .setDownloader(new JSONDownloader())
-                    .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveRepository)))
+                    .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveService)))
                     .addUrl(config.getCoub().getUrl())
                     .thread(1)
                     .run();

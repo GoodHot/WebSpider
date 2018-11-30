@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.goodHot.fun.domain.Archive;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.enums.ArchiveEnum;
-import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.SpiderIndexRepository;
+import com.goodHot.fun.service.ArchiveService;
 import com.goodHot.fun.util.Encrypts;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
@@ -24,11 +24,11 @@ public class CoubPipeline extends BasePipeline {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-    private ArchiveRepository archiveRepository;
+    private ArchiveService archiveService;
 
-    public CoubPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveRepository archiveRepository) {
+    public CoubPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService) {
         super(spiderIndexRepository);
-        this.archiveRepository = archiveRepository;
+        this.archiveService = archiveService;
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
@@ -46,7 +46,7 @@ public class CoubPipeline extends BasePipeline {
             archive.setUnique(Encrypts.md5(archive.getSource()));
             archive.setStatus(ArchiveEnum.Status.WAIT.status);
             if (super.isExists(archive.getUnique())) {
-                log.warn("[GAG Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
+                log.warn("[COUB Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
                 continue;
             }
             CoubEmbedMedia media = new CoubEmbedMedia("//coub.com/embed/" + post.getString("permalink"));
@@ -55,7 +55,7 @@ public class CoubPipeline extends BasePipeline {
             archives.add(archive);
         }
         super.saveTree();
-        archiveRepository.insert(archives);
+        archiveService.insertForTranslate(archives);
     }
 
     private Date formatDate(String dateStr) {

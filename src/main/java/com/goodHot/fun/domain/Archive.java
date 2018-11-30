@@ -41,6 +41,11 @@ public class Archive {
     private String title;
 
     /**
+     * 翻译后的标题
+     */
+    private String translateTitle;
+
+    /**
      * 是否需要转码 true = 转码  false = 不转码
      */
     private Boolean transcoding;

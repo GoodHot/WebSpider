@@ -13,3 +13,9 @@ spider:
     url: https://9gag.com/v1/group-posts/group/default/type/hot
   coub:
     url: https://coub.com/api/v2/timeline/hot/weekly?page=1
+
+api:
+  baidu:
+    translateURL: http://api.fanyi.baidu.com/api/trans/vip/translate?q=%s&from=auto&to=zh&appid=%s&salt=%s&sign=%s
+    appId: 1
+    sign: 2
