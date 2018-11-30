@@ -9,6 +9,18 @@ public class ArchiveEnum {
         Status(int status) {
             this.status = status;
         }
+
+        public static Status find(Integer status) {
+            if (status == null) {
+                return null;
+            }
+            for (Status val : values()) {
+                if (val.status == status) {
+                    return val;
+                }
+            }
+            return null;
+        }
     }
 
 }

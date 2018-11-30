@@ -15,4 +15,7 @@ public class CoubEmbedMedia extends AbstractMedia {
     private String url;
     private MediaEnum type = MediaEnum.COUB_EMBED;
 
+    private String videoURL;
+    private String audioURL;
+
 }
