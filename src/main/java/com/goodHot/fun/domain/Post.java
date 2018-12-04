@@ -10,10 +10,13 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 内容
+ */
 @Data
 @NoArgsConstructor
 @ToString
-public class Content {
+public class Post {
 
     @Id
     private String id;
@@ -60,7 +63,7 @@ public class Content {
     private Category category;
 
     /**
-     * 简要内容
+     * 内容
      */
     private List<AbstractMedia> medias;
 

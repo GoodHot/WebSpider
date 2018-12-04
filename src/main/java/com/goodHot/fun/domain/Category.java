@@ -7,6 +7,9 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
+/**
+ * 内容分类
+ */
 @Data
 @ToString
 @NoArgsConstructor
@@ -23,7 +26,7 @@ public class Category {
     /**
      * 英文名
      */
-    private String ename;
+    private String eName;
 
     /**
      * 图标
@@ -41,5 +44,7 @@ public class Category {
     private Boolean isShow;
 
     private Date created;
+
+    private Date modified;
 
 }

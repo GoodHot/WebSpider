@@ -1,6 +1,7 @@
 package com.goodHot.fun.rest.admin;
 
 import com.goodHot.fun.common.RestResult;
+import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
 import com.goodHot.fun.service.SpiderService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping("spider")
+@RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/spider")
 @RestController
 public class SpiderRest {
 

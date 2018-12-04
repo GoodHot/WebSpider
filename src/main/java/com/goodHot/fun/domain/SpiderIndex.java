@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
+/**
+ * 爬虫索引
+ */
 @Data
 @ToString
 public class SpiderIndex {

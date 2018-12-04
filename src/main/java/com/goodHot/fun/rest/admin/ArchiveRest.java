@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("archive")
+@RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/archive")
 @RestController
 public class ArchiveRest {
 

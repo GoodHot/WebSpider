@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 资源，爬虫抓取到的资源
+ */
 @Data
 @ToString
 public class Archive {
