@@ -1,15 +1,19 @@
 package com.goodHot.fun.service.impl;
 
 import com.goodHot.fun.domain.Archive;
+import com.goodHot.fun.domain.ArchiveTask;
 import com.goodHot.fun.domain.media.AbstractMedia;
+import com.goodHot.fun.dto.req.ArchivePass;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.exception.ExceptionHelper;
 import com.goodHot.fun.repository.ArchiveRepository;
+import com.goodHot.fun.repository.ArchiveTaskRepository;
 import com.goodHot.fun.service.ArchiveService;
 import com.goodHot.fun.service.DownloadService;
 import com.goodHot.fun.service.PostService;
 import com.goodHot.fun.service.TranslateService;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +22,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArchiveServiceImpl implements ArchiveService {
 
     @Autowired
     private ArchiveRepository archiveRepository;
+
+    @Autowired
+    private ArchiveTaskRepository archiveTaskRepository;
 
     @Autowired
     private TranslateService translateService;
@@ -67,6 +75,29 @@ public class ArchiveServiceImpl implements ArchiveService {
         List<AbstractMedia> medias = archive.getMedias();
         downloadService.downloadMedias(medias);
         return null;
+    }
+
+    @Override
+    public Boolean pass(ArchivePass archive) {
+        Optional<Archive> opt = archiveRepository.findById(archive.getId());
+        if (!opt.isPresent()) {
+            return false;
+        }
+        Archive data = opt.get();
+        data.setTranslateTitle(archive.getTitle());
+        ArchiveTask task = new ArchiveTask();
+        task.setArchive(data);
+        task.setCategoryId(archive.getCategory());
+        task.setProcessing(false);
+        archiveTaskRepository.save(task);
+        archiveRepository.deleteById(archive.getId());
+        return StringUtils.isNotBlank(task.getId());
+    }
+
+    @Override
+    public Boolean rejected(String id) {
+        archiveRepository.deleteById(id);
+        return true;
     }
 
 }

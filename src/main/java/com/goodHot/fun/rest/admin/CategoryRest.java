@@ -2,40 +2,45 @@ package com.goodHot.fun.rest.admin;
 
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
+import com.goodHot.fun.domain.Archive;
+import com.goodHot.fun.domain.Category;
+import com.goodHot.fun.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/category")
 @RestController
+@CrossOrigin
 public class CategoryRest {
 
+    @Autowired
+    private CategoryService categoryService;
+
     @PostMapping
-    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
-    public RestResult add() {
-        return RestResult.ok();
+    public RestResult add(@RequestBody Category category) {
+        return RestResult.ok(categoryService.insert(category));
     }
 
     @DeleteMapping
-    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
     public RestResult delete() {
         return RestResult.ok();
     }
 
     @PutMapping
-    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
     public RestResult update() {
         return RestResult.ok();
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
     public RestResult get(@PathVariable("id") String id) {
         return RestResult.ok();
     }
 
     @GetMapping("/page/{index}_{size}")
-    @CrossOrigin(WebsiteConfig.ADMIN_WEBSITE)
-    public RestResult list(@PathVariable("index") Integer page, @PathVariable("size") Integer size) {
-        return RestResult.ok();
+    public RestResult list(@PathVariable("index") Integer pageIndex, @PathVariable("size") Integer pageSize) {
+        Page<Category> page = categoryService.page(pageIndex, pageSize);
+        return RestResult.ok(page);
     }
 
 }

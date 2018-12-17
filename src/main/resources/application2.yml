@@ -17,10 +17,5 @@ spider:
 api:
   baidu:
     translateURL: http://api.fanyi.baidu.com/api/trans/vip/translate?q=%s&from=auto&to=zh&appid=%s&salt=%s&sign=%s
-    appId: 20181128000240516
-    sign: n7rDONXmDEK02bAmeJDI
-
-server:
-  port: 9999
-
-task.max.retry: 3
+    appId: 1
+    sign: 2

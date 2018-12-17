@@ -1,6 +1,7 @@
 package com.goodHot.fun.service;
 
 import com.goodHot.fun.domain.Archive;
+import com.goodHot.fun.dto.req.ArchivePass;
 import com.goodHot.fun.enums.ArchiveEnum;
 import org.springframework.data.domain.Page;
 
@@ -21,4 +22,8 @@ public interface ArchiveService {
      * @return
      */
     Boolean approval(String id, ArchiveEnum.Status status);
+
+    Boolean pass(ArchivePass archive);
+
+    Boolean rejected(String id);
 }
