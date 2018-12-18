@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -26,5 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "created"));
         Page<Category> page = categoryRepository.findAll(pageable);
         return page;
+    }
+
+    @Override
+    public Category findById(String categoryId) {
+        Optional<Category> opt = categoryRepository.findById(categoryId);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
     }
 }

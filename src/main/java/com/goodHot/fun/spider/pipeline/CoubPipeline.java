@@ -49,7 +49,12 @@ public class CoubPipeline extends BasePipeline {
                 log.warn("[COUB Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
                 continue;
             }
+            JSONObject source = post.getJSONObject("file_versions").getJSONObject("html5");
+            String videoURL = source.getJSONObject("video").getJSONObject("med").getString("url");
+            String audioURL = source.getJSONObject("audio").getJSONObject("med").getString("url");
             CoubEmbedMedia media = new CoubEmbedMedia("//coub.com/embed/" + post.getString("permalink"));
+            media.setVideoURL(videoURL);
+            media.setAudioURL(audioURL);
             archive.setMedias(Lists.newArrayList(media));
             log.info("[COUB Spider] get content: " + archive);
             archives.add(archive);

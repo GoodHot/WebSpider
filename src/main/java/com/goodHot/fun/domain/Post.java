@@ -63,6 +63,11 @@ public class Post {
     private Category category;
 
     /**
+     * 标题
+     */
+    private String title;
+
+    /**
      * 内容
      */
     private List<AbstractMedia> medias;

@@ -23,4 +23,6 @@ api:
 server:
   port: 9999
 
-task.max.retry: 3
+
+post:
+  downloadDir: /my/tmp/downloader/

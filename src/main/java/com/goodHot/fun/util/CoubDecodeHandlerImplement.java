@@ -10,9 +10,9 @@ public class CoubDecodeHandlerImplement implements DecodeHandler {
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");) {
             randomAccessFile.seek(0);
             randomAccessFile.write(new byte[]{0x00, 0x00}, 0, 2);
-            file.renameTo(new File(file.getParent() + "/NICE_" + file.getName()));
+            file.renameTo(file);
         } catch (IOException e) {
-            // TODO: 2018/11/23 log
+            throw new RuntimeException(e);
         }
     }
 
