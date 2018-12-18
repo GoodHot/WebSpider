@@ -3,6 +3,8 @@ package com.goodHot.fun.spider.processor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.goodHot.fun.util.Emitters;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -19,8 +21,11 @@ public class CoubPageProcessor implements PageProcessor {
 
     private int size;
 
-    public CoubPageProcessor(int size) {
+    private ResponseBodyEmitter emitter;
+
+    public CoubPageProcessor(int size, ResponseBodyEmitter emitter) {
         this.size = size;
+        this.emitter = emitter;
     }
 
     @Override
@@ -29,6 +34,7 @@ public class CoubPageProcessor implements PageProcessor {
         JSONArray coubs = json.getJSONArray("coubs");
         page.putField("posts", coubs);
         if (count.addAndGet(coubs.size()) >= size) {
+            Emitters.send(emitter, "done !!");
             return;
         }
         Integer nextPage = json.getInteger("page");
@@ -40,7 +46,6 @@ public class CoubPageProcessor implements PageProcessor {
             e.printStackTrace();
         }
         page.addTargetRequest(nextURL.toString());
-        System.out.println("==========================");
     }
 
     @Override

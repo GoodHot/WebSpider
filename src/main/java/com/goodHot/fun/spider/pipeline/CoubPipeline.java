@@ -1,5 +1,6 @@
 package com.goodHot.fun.spider.pipeline;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.goodHot.fun.domain.Archive;
@@ -7,9 +8,11 @@ import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.repository.SpiderIndexRepository;
 import com.goodHot.fun.service.ArchiveService;
+import com.goodHot.fun.util.Emitters;
 import com.goodHot.fun.util.Encrypts;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 
@@ -26,8 +29,9 @@ public class CoubPipeline extends BasePipeline {
 
     private ArchiveService archiveService;
 
-    public CoubPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService) {
+    public CoubPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService, ResponseBodyEmitter emitter) {
         super(spiderIndexRepository);
+        super.emitter = emitter;
         this.archiveService = archiveService;
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
@@ -47,6 +51,7 @@ public class CoubPipeline extends BasePipeline {
             archive.setStatus(ArchiveEnum.Status.WAIT.status);
             if (super.isExists(archive.getUnique())) {
                 log.warn("[COUB Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
+                Emitters.send(super.emitter, "[COUB Spider] repeat:" + archive.getSource());
                 continue;
             }
             JSONObject source = post.getJSONObject("file_versions").getJSONObject("html5");
@@ -57,6 +62,7 @@ public class CoubPipeline extends BasePipeline {
             media.setAudioURL(audioURL);
             archive.setMedias(Lists.newArrayList(media));
             log.info("[COUB Spider] get content: " + archive);
+            Emitters.send(super.emitter, "[COUB Spider] get content: " + JSON.toJSONString(archive));
             archives.add(archive);
         }
         super.saveTree();

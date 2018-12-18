@@ -2,6 +2,7 @@ package com.goodHot.fun.spider.pipeline;
 
 import com.goodHot.fun.domain.SpiderIndex;
 import com.goodHot.fun.repository.SpiderIndexRepository;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.trie4j.doublearray.DoubleArray;
 import org.trie4j.patricia.PatriciaTrie;
 import us.codecraft.webmagic.pipeline.Pipeline;
@@ -17,6 +18,8 @@ public abstract class BasePipeline implements Pipeline {
     protected SpiderIndexRepository spiderIndexRepository;
 
     protected DoubleArray doubleArray;
+
+    protected ResponseBodyEmitter emitter;
 
     public BasePipeline(SpiderIndexRepository spiderIndexRepository) {
         this.spiderIndexRepository = spiderIndexRepository;

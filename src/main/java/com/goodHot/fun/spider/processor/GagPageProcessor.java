@@ -3,6 +3,8 @@ package com.goodHot.fun.spider.processor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.goodHot.fun.util.Emitters;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -19,8 +21,11 @@ public class GagPageProcessor implements PageProcessor {
 
     private int size;
 
-    public GagPageProcessor(int size){
+    private ResponseBodyEmitter emitter;
+
+    public GagPageProcessor(int size, ResponseBodyEmitter emitter){
         this.size = size;
+        this.emitter = emitter;
     }
 
     @Override
@@ -29,6 +34,7 @@ public class GagPageProcessor implements PageProcessor {
         JSONArray posts = json.getJSONObject("data").getJSONArray("posts");
         page.putField("posts", posts);
         if(count.addAndGet(posts.size()) >= size){
+            Emitters.send(emitter, "done !!");
             return ;
         }
         String nextPage = json.getJSONObject("data").getString("nextCursor");

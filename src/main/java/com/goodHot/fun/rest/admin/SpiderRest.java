@@ -1,6 +1,5 @@
 package com.goodHot.fun.rest.admin;
 
-import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
 import com.goodHot.fun.service.SpiderService;
@@ -8,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 @Slf4j
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/spider")
@@ -21,15 +21,19 @@ public class SpiderRest {
     private SpiderService spiderService;
 
     @ApiOperation(value = "9GAG爬虫", tags = SWAGGER_TAG)
-    @PostMapping("gag")
-    public RestResult gag(@ModelAttribute SpiderReq req) {
-        return RestResult.ok(spiderService.startGag(req));
+    @GetMapping("gag/{size}")
+    public ResponseBodyEmitter gag(@PathVariable Integer size) {
+        ResponseBodyEmitter emitter = new ResponseBodyEmitter();
+        spiderService.startGag(new SpiderReq(size), emitter);
+        return emitter;
     }
 
     @ApiOperation(value = "COUB爬虫", tags = SWAGGER_TAG)
-    @PostMapping("coub")
-    public RestResult coub(@ModelAttribute SpiderReq req) {
-        return RestResult.ok(spiderService.startCoub(req));
+    @GetMapping("coub/{size}")
+    public ResponseBodyEmitter coub(@PathVariable Integer size) {
+        ResponseBodyEmitter emitter = new ResponseBodyEmitter();
+        spiderService.startCoub(new SpiderReq(size), emitter);
+        return emitter;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.goodHot.fun.spider.pipeline;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.goodHot.fun.domain.Archive;
@@ -9,10 +10,12 @@ import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.repository.SpiderIndexRepository;
 import com.goodHot.fun.service.ArchiveService;
+import com.goodHot.fun.util.Emitters;
 import com.goodHot.fun.util.Encrypts;
 import com.goodHot.fun.util.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 
@@ -21,9 +24,10 @@ import java.util.List;
 @Slf4j
 public class GagPipeline extends BasePipeline {
 
-    public GagPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService) {
+    public GagPipeline(SpiderIndexRepository spiderIndexRepository, ArchiveService archiveService, ResponseBodyEmitter emitter) {
         super(spiderIndexRepository);
         this.archiveService = archiveService;
+        this.emitter = emitter;
     }
 
     private ArchiveService archiveService;
@@ -43,6 +47,7 @@ public class GagPipeline extends BasePipeline {
             archive.setStatus(ArchiveEnum.Status.WAIT.status);
             if (super.isExists(archive.getUnique())) {
                 log.warn("[GAG Spider] content is exists ! source: {}, title: {}", archive.getSource(), archive.getTitle());
+                Emitters.send(super.emitter, "[GAG Spider] repeat:" + archive.getSource());
                 continue;
             }
 
@@ -67,6 +72,7 @@ public class GagPipeline extends BasePipeline {
             }
             archive.setMedias(medias);
             log.info("[GAG Spider] get content: " + archive);
+            Emitters.send(super.emitter, "[GAG Spider] get content: " + JSON.toJSONString(archive));
             archives.add(archive);
         }
         super.saveTree();
@@ -77,4 +83,5 @@ public class GagPipeline extends BasePipeline {
     public String getSpiderName() {
         return "gag";
     }
+
 }

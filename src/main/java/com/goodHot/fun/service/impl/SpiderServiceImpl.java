@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import us.codecraft.webmagic.Spider;
 
 import java.util.concurrent.ExecutorService;
@@ -42,14 +43,14 @@ public class SpiderServiceImpl implements SpiderService {
     private static final ExecutorService SPIDER_POOL = Executors.newFixedThreadPool(4);
 
     @Override
-    public Boolean startGag(SpiderReq req) {
+    public Boolean startGag(SpiderReq req, ResponseBodyEmitter emitter) {
         String running = redisTemplate.opsForValue().get(GAG_RUNNING_LOCK_KEY);
         ExceptionHelper.param(running != null, "GAG爬虫正在运行");
         SPIDER_POOL.execute(() -> {
             redisTemplate.opsForValue().set(GAG_RUNNING_LOCK_KEY, "running");
-            Spider.create(new GagPageProcessor(req.getSize()))
+            Spider.create(new GagPageProcessor(req.getSize(), emitter))
                     .setDownloader(new JSONDownloader())
-                    .setPipelines(Lists.newArrayList(new GagPipeline(spiderIndexRepository, archiveService)))
+                    .setPipelines(Lists.newArrayList(new GagPipeline(spiderIndexRepository, archiveService, emitter)))
                     .addUrl(config.getGag().getUrl())
                     .thread(1)
                     .run();
@@ -59,14 +60,14 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
-    public Boolean startCoub(SpiderReq req) {
+    public Boolean startCoub(SpiderReq req, ResponseBodyEmitter emitter) {
         String running = redisTemplate.opsForValue().get(COUB_RUNNING_LOCK_KEY);
         ExceptionHelper.param(running != null, "COUB爬虫正在运行");
         SPIDER_POOL.execute(() -> {
             redisTemplate.opsForValue().set(COUB_RUNNING_LOCK_KEY, "running");
-            Spider.create(new CoubPageProcessor(req.getSize()))
+            Spider.create(new CoubPageProcessor(req.getSize(), emitter))
                     .setDownloader(new JSONDownloader())
-                    .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveService)))
+                    .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveService, emitter)))
                     .addUrl(config.getCoub().getUrl())
                     .thread(1)
                     .run();

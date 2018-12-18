@@ -29,7 +29,8 @@ public class ProcessServiceImpl implements ProcessService {
     @Override
     public void mp4(MP4Media media) {
         String videoPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix);
-        String posterPath = download(media.getPosterUrl(), Encrypts.md5(media.getPosterUrl()) + MediaEnum.VIDEO.suffix);
+        String posterPath = download(media.getPosterUrl(), Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix);
+        // TODO: 2018/12/18 添加水印
         // TODO: 2018/12/18 上传OSS服务器
         String ossVideoURL = videoPath;
         String ossPosterURL = posterPath;
@@ -39,7 +40,8 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public void jpeg(JPEGMedia media) {
-        String imgPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix);
+        String imgPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix);
+        // TODO: 2018/12/18 添加水印
         // TODO: 2018/12/18 上传OSS服务器
         String ossImgURL = imgPath;
         media.setUrl(ossImgURL);
@@ -49,6 +51,7 @@ public class ProcessServiceImpl implements ProcessService {
     public void coubEmbed(CoubEmbedMedia media) {
         String videoPath = download(media.getVideoURL(), Encrypts.md5(media.getVideoURL()) + MediaEnum.VIDEO.suffix);
         String audioPath = download(media.getAudioURL(), Encrypts.md5(media.getAudioURL()) + MediaEnum.AUDIO.suffix);
+        // TODO: 2018/12/18 添加水印
         // TODO: 2018/12/18 上传OSS服务器
         decodeHandler.decode(new File(videoPath));
         String ossVideoURL = videoPath;
