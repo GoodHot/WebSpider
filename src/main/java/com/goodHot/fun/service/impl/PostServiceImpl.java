@@ -4,10 +4,7 @@ import com.goodHot.fun.domain.Archive;
 import com.goodHot.fun.domain.ArchiveTask;
 import com.goodHot.fun.domain.Category;
 import com.goodHot.fun.domain.Post;
-import com.goodHot.fun.domain.media.AbstractMedia;
-import com.goodHot.fun.domain.media.CoubEmbedMedia;
-import com.goodHot.fun.domain.media.JPEGMedia;
-import com.goodHot.fun.domain.media.MP4Media;
+import com.goodHot.fun.domain.media.*;
 import com.goodHot.fun.repository.PostRepository;
 import com.goodHot.fun.service.CategoryService;
 import com.goodHot.fun.service.PostService;
@@ -16,9 +13,13 @@ import com.goodHot.fun.util.Times;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.LinkedList;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -35,7 +36,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean processTask(ArchiveTask task) {
         Archive archive = task.getArchive();
-        List<AbstractMedia> medias = archive.getMedias();
+        LinkedList<AbstractMedia> medias = new LinkedList<>(archive.getMedias());
+        if (StringUtils.isNotBlank(archive.getTranslateTitle())) {
+            medias.addFirst(new TextMedia(archive.getTranslateTitle()));
+        } else {
+            medias.addFirst(new TextMedia(archive.getTitle()));
+        }
         if (CollectionUtils.isNotEmpty(medias)) {
             medias.forEach(media -> mediaProcessFactory(media));
         }
@@ -45,8 +51,16 @@ public class PostServiceImpl implements PostService {
         post.setSource(archive.getSource());
         post.setTitle(archive.getTranslateTitle());
         post.setMedias(medias);
+        post.setCategory(category);
         postRepository.save(post);
         return StringUtils.isNotBlank(post.getId());
+    }
+
+    @Override
+    public Page<Post> page(String category, int index, int size) {
+        Pageable pageable = new PageRequest(index - 1, size, new Sort(Sort.Direction.DESC, "created"));
+        Page<Post> page = postRepository.findAll(pageable);
+        return page;
     }
 
     private void mediaProcessFactory(AbstractMedia media) {
@@ -56,6 +70,8 @@ public class PostServiceImpl implements PostService {
             processService.jpeg((JPEGMedia) media);
         } else if (media instanceof CoubEmbedMedia) {
             processService.coubEmbed((CoubEmbedMedia) media);
+        } else if (media instanceof TextMedia) {
+            // skip
         }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,5 +38,10 @@ public class CategoryServiceImpl implements CategoryService {
             return opt.get();
         }
         return null;
+    }
+
+    @Override
+    public List<Category> getAllByIsShow() {
+        return categoryRepository.findByIsShow(Boolean.TRUE);
     }
 }

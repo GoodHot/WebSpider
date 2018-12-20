@@ -34,8 +34,8 @@ public class ProcessServiceImpl implements ProcessService {
         // TODO: 2018/12/18 上传OSS服务器
         String ossVideoURL = videoPath;
         String ossPosterURL = posterPath;
-        media.setUrl(ossVideoURL);
-        media.setPosterUrl(ossPosterURL);
+//        media.setUrl(ossVideoURL);
+//        media.setPosterUrl(ossPosterURL);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ProcessServiceImpl implements ProcessService {
         // TODO: 2018/12/18 添加水印
         // TODO: 2018/12/18 上传OSS服务器
         String ossImgURL = imgPath;
-        media.setUrl(ossImgURL);
+//        media.setUrl(ossImgURL);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class ProcessServiceImpl implements ProcessService {
         decodeHandler.decode(new File(videoPath));
         String ossVideoURL = videoPath;
         String ossAudioURL = audioPath;
-        media.setVideoURL(ossVideoURL);
-        media.setAudioURL(ossAudioURL);
+//        media.setVideoURL(ossVideoURL);
+//        media.setAudioURL(ossAudioURL);
     }
 
     private String download(String url, String fileName) {
