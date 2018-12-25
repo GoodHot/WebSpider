@@ -1,13 +1,12 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,20 +15,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @ToString
-public class Post {
-
-    @Id
-    private String id;
+public class Post extends BaseDomain {
 
     /**
      * 作者
      */
     private String authorId;
 
-    /**
-     * 创建时间
-     */
-    private Date created;
 
     /**
      * 浏览数

@@ -1,15 +1,12 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
 @Data
 @ToString
-public class ArchiveTask {
-
-    @Id
-    private String id;
+public class ArchiveTask extends BaseDomain {
 
     private String categoryId;
 

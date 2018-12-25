@@ -1,11 +1,10 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,10 +12,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class Archive {
-
-    @Id
-    private String id;
+public class Archive extends BaseDomain {
 
     /**
      * 来源，coub, 9gag, reddit, imgur
@@ -27,11 +23,6 @@ public class Archive {
      * 唯一编码，去重使用
      */
     private String unique;
-
-    /**
-     * 创建时间
-     */
-    private Date created;
 
     /**
      * 封面图片(url)

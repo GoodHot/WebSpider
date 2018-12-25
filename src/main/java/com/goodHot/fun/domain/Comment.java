@@ -1,11 +1,10 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import com.goodHot.fun.enums.DeviceTypeEnum;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,10 +12,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class Comment {
-
-    @Id
-    private String id;
+public class Comment extends BaseDomain {
 
     private String postId;
 
@@ -50,11 +46,5 @@ public class Comment {
      * 评论人ID
      */
     private String ip;
-
-    private Boolean deleted;
-
-    private Date created;
-
-    private Date modified;
 
 }

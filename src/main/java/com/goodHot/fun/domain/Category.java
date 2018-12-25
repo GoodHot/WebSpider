@@ -1,11 +1,9 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-
-import java.util.Date;
 
 /**
  * 内容分类
@@ -13,10 +11,7 @@ import java.util.Date;
 @Data
 @ToString
 @NoArgsConstructor
-public class Category {
-
-    @Id
-    private String id;
+public class Category extends BaseDomain {
 
     /**
      * 分类名称
@@ -42,9 +37,5 @@ public class Category {
      * 是否显示
      */
     private Boolean isShow;
-
-    private Date created;
-
-    private Date modified;
 
 }

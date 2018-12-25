@@ -1,18 +1,15 @@
 package com.goodHot.fun.domain;
 
+import com.goodHot.fun.common.BaseDomain;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
 /**
  * 爬虫索引
  */
 @Data
 @ToString
-public class SpiderIndex {
-
-    @Id
-    private String id;
+public class SpiderIndex extends BaseDomain {
 
     /**
      * 爬虫名称

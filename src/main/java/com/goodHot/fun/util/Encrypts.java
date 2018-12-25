@@ -19,4 +19,8 @@ public class Encrypts {
         }
     }
 
+    public static String passwd(String str){
+        return md5(str).substring(3);
+    }
+
 }
