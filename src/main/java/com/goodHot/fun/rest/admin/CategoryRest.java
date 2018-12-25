@@ -2,7 +2,6 @@ package com.goodHot.fun.rest.admin;
 
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
-import com.goodHot.fun.domain.Archive;
 import com.goodHot.fun.domain.Category;
 import com.goodHot.fun.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

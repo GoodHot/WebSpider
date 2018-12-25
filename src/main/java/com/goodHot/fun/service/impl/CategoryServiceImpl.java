@@ -3,6 +3,7 @@ package com.goodHot.fun.service.impl;
 import com.goodHot.fun.domain.Category;
 import com.goodHot.fun.repository.CategoryRepository;
 import com.goodHot.fun.service.CategoryService;
+import com.goodHot.fun.util.Times;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category insert(Category category) {
+        category.setCreated(Times.now());
+        category.setModified(Times.now());
         return categoryRepository.insert(category);
     }
 
