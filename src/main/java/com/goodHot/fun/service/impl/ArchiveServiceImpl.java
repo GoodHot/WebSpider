@@ -3,7 +3,7 @@ package com.goodHot.fun.service.impl;
 import com.goodHot.fun.domain.Archive;
 import com.goodHot.fun.domain.ArchiveTask;
 import com.goodHot.fun.domain.media.AbstractMedia;
-import com.goodHot.fun.dto.req.ArchivePass;
+import com.goodHot.fun.dto.req.ArchivePassReq;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.exception.ExceptionHelper;
 import com.goodHot.fun.repository.ArchiveRepository;
@@ -78,7 +78,7 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
 
     @Override
-    public Boolean pass(ArchivePass archive) {
+    public Boolean pass(ArchivePassReq archive) {
         Optional<Archive> opt = archiveRepository.findById(archive.getId());
         if (!opt.isPresent()) {
             return false;

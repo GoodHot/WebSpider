@@ -43,8 +43,7 @@ public class SpiderRest {
 
     @GetMapping("resource")
     public RestResult resource(@RequestParam String url) {
-        spiderResourceService.getResource(url);
-        return RestResult.ok();
+        return RestResult.ok(spiderResourceService.getResource(url));
     }
 
 }
