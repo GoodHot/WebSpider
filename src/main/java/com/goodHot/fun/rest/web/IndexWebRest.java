@@ -1,6 +1,7 @@
 package com.goodHot.fun.rest.web;
 
 import com.goodHot.fun.common.RestResult;
+import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.domain.Category;
 import com.goodHot.fun.domain.Collect;
 import com.goodHot.fun.domain.Post;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("index")
-public class IndexRest {
+@RequestMapping(WebsiteConfig.WEB_PREFIX + "/index")
+public class IndexWebRest {
 
     @Autowired
     private CategoryService categoryService;

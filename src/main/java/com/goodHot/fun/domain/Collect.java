@@ -22,4 +22,10 @@ public class Collect extends BaseDomain {
      */
     private List<AbstractMedia> medias;
 
+    private Integer like;
+
+    private Integer dislike;
+
+    private Integer comments;
+
 }
