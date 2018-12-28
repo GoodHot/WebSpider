@@ -2,7 +2,6 @@ package com.goodHot.fun.domain;
 
 import com.goodHot.fun.common.BaseDomain;
 import com.goodHot.fun.domain.media.AbstractMedia;
-import com.goodHot.fun.domain.media.MP4Media;
 import lombok.Data;
 import lombok.ToString;
 
@@ -16,7 +15,7 @@ public class Collect extends BaseDomain {
 
     private String userId;
 
-    private MP4Media cover;
+    private AbstractMedia cover;
 
     /**
      * 内容

@@ -1,7 +1,9 @@
 package com.goodHot.fun.rest.admin;
 
+import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
+import com.goodHot.fun.service.SpiderResourceService;
 import com.goodHot.fun.service.SpiderService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,9 @@ public class SpiderRest {
     @Autowired
     private SpiderService spiderService;
 
+    @Autowired
+    private SpiderResourceService spiderResourceService;
+
     @ApiOperation(value = "9GAG爬虫", tags = SWAGGER_TAG)
     @GetMapping("gag/{size}")
     public ResponseBodyEmitter gag(@PathVariable Integer size) {
@@ -34,6 +39,11 @@ public class SpiderRest {
         ResponseBodyEmitter emitter = new ResponseBodyEmitter();
         spiderService.startCoub(new SpiderReq(size), emitter);
         return emitter;
+    }
+
+    @GetMapping("resource")
+    public RestResult resource(@RequestParam String url) {
+        return RestResult.ok(spiderResourceService.getResource(url));
     }
 
 }

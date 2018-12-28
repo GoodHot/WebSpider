@@ -4,7 +4,7 @@ package com.goodHot.fun.rest.admin;
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.domain.Archive;
-import com.goodHot.fun.dto.req.ArchivePass;
+import com.goodHot.fun.dto.req.ArchivePassReq;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.exception.ExceptionHelper;
 import com.goodHot.fun.service.ArchiveService;
@@ -33,7 +33,7 @@ public class ArchiveRest {
     }
 
     @PostMapping("/pass")
-    public RestResult pass(@RequestBody ArchivePass archive) {
+    public RestResult pass(@RequestBody ArchivePassReq archive) {
         return RestResult.ok(archiveService.pass(archive));
     }
 
