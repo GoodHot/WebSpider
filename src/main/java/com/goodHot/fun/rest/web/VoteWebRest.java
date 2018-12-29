@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("vote")
-public class VoteRest {
+public class VoteWebRest {
 
     @PostMapping("like")
     public RestResult like() {
