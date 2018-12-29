@@ -17,5 +17,7 @@ public class CoubEmbedMedia extends AbstractMedia {
 
     private String videoURL;
     private String audioURL;
+    private Integer width;
+    private Integer height;
 
 }
