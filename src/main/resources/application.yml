@@ -26,3 +26,12 @@ server:
 
 post:
   downloadDir: /my/tmp/downloader/
+
+upyun:
+  bucket:
+    name: jiemen-vedio-upyun
+    coub: /coub
+    jpeg: /jpeg
+  operator:
+    name: wang22
+    pwd: 111111hhhhhh

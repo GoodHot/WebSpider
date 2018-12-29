@@ -29,6 +29,12 @@ public class CollectRest {
     @Autowired
     private CollectService collectService;
 
+    /**
+     * 合集 新增
+     *
+     * @param body
+     * @return
+     */
     @PostMapping
     public RestResult add(@RequestBody String body) {
         Collect collect = new Collect();
@@ -46,6 +52,13 @@ public class CollectRest {
         return RestResult.ok(collectService.insert(collect));
     }
 
+    /**
+     * 合集 列表
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
     @GetMapping("/page/{index}_{size}")
     public RestResult list(@PathVariable("index") Integer pageIndex, @PathVariable("size") Integer pageSize) {
         Page<Collect> page = collectService.page(pageIndex, pageSize);

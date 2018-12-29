@@ -10,6 +10,7 @@ import com.goodHot.fun.service.CategoryService;
 import com.goodHot.fun.service.PostService;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.Times;
+import com.goodHot.fun.util.upyun.com.upyun.UpException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 @Service
@@ -43,7 +45,15 @@ public class PostServiceImpl implements PostService {
             medias.addFirst(new TextMedia(archive.getTitle()));
         }
         if (CollectionUtils.isNotEmpty(medias)) {
-            medias.forEach(media -> mediaProcessFactory(media));
+            medias.forEach(media -> {
+                try {
+                    mediaProcessFactory(media);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (UpException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         Category category = categoryService.findById(task.getCategoryId());
         Post post = new Post();
@@ -63,7 +73,7 @@ public class PostServiceImpl implements PostService {
         return page;
     }
 
-    private void mediaProcessFactory(AbstractMedia media) {
+    private void mediaProcessFactory(AbstractMedia media) throws IOException, UpException {
         if (media instanceof MP4Media) {
             processService.mp4((MP4Media) media);
         } else if (media instanceof JPEGMedia) {
