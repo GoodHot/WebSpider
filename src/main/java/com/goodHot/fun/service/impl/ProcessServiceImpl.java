@@ -10,7 +10,10 @@ import com.goodHot.fun.util.CoubDecodeHandlerImplement;
 import com.goodHot.fun.util.DecodeHandler;
 import com.goodHot.fun.util.Download;
 import com.goodHot.fun.util.Encrypts;
+import com.goodHot.fun.util.upyun.UpYunUtil;
+import com.goodHot.fun.util.upyun.com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -26,38 +29,48 @@ public class ProcessServiceImpl implements ProcessService {
 
     private DecodeHandler decodeHandler = new CoubDecodeHandlerImplement();
 
+    @Autowired
+    private UpYunUtil upYunUtil;
+
+    // 放在upyun的路径
+    @Value("${upyun.bucket.coub}")
+    private String upYunCoubPath;
+
+    @Value("${upyun.bucket.jpeg}")
+    private String upYunJPEGPath;
+
+    @Value("${upyun.bucket.mp4}")
+    private String upYunMP4Path;
+
     @Override
-    public void mp4(MP4Media media) {
+    public void mp4(MP4Media media) throws IOException, UpException {
         String videoPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix);
         String posterPath = download(media.getPosterUrl(), Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix);
         // TODO: 2018/12/18 添加水印
-        // TODO: 2018/12/18 上传OSS服务器
-        String ossVideoURL = videoPath;
-        String ossPosterURL = posterPath;
-//        media.setUrl(ossVideoURL);
-//        media.setPosterUrl(ossPosterURL);
+        media.setUrl(upYunUtil.upload(videoPath, upYunMP4Path));
+        media.setPosterUrl(upYunUtil.upload(posterPath, upYunMP4Path));
+
     }
 
     @Override
-    public void jpeg(JPEGMedia media) {
+    public void jpeg(JPEGMedia media) throws IOException, UpException {
         String imgPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix);
         // TODO: 2018/12/18 添加水印
-        // TODO: 2018/12/18 上传OSS服务器
-        String ossImgURL = imgPath;
-//        media.setUrl(ossImgURL);
+        media.setUrl(upYunUtil.upload(imgPath, upYunJPEGPath));
     }
 
     @Override
-    public void coubEmbed(CoubEmbedMedia media) {
+    public void coubEmbed(CoubEmbedMedia media) throws IOException, UpException {
         String videoPath = download(media.getVideoURL(), Encrypts.md5(media.getVideoURL()) + MediaEnum.VIDEO.suffix);
         String audioPath = download(media.getAudioURL(), Encrypts.md5(media.getAudioURL()) + MediaEnum.AUDIO.suffix);
+        // 解码
+        decodeHandler.decode( new File(videoPath));
         // TODO: 2018/12/18 添加水印
-        // TODO: 2018/12/18 上传OSS服务器
-        decodeHandler.decode(new File(videoPath));
-        String ossVideoURL = videoPath;
-        String ossAudioURL = audioPath;
-//        media.setVideoURL(ossVideoURL);
-//        media.setAudioURL(ossAudioURL);
+
+        // 上传OSS服务器
+        media.setVideoURL(upYunUtil.upload(videoPath, upYunCoubPath));
+        media.setAudioURL(upYunUtil.upload(audioPath, upYunCoubPath));
+
     }
 
     private String download(String url, String fileName) {

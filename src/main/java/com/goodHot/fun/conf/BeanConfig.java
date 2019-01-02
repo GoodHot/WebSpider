@@ -1,6 +1,8 @@
 package com.goodHot.fun.conf;
 
 import com.goodHot.fun.util.Download;
+import com.goodHot.fun.util.upyun.com.UpYun;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,15 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class BeanConfig {
 
+
+    @Value("${upyun.bucket.name}")
+    private String bucketName;
+
+    @Value("${upyun.operator.name}")
+    private String operatorName;
+
+    @Value("${upyun.operator.pwd}")
+    private String operatorPwd;
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -36,6 +47,13 @@ public class BeanConfig {
         retryTemplate.setRetryPolicy(retryPolicy);
 
         return retryTemplate;
+    }
+
+    @Bean
+    public UpYun upYun() {
+        return new UpYun(bucketName, operatorName, operatorPwd){{
+            setTimeout(60);
+        }};
     }
 
 }

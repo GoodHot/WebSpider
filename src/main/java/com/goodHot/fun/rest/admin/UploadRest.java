@@ -12,6 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class UploadRest {
 
+    /**
+     * 用户上传头像
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/avatar")
     public RestResult avatar(@RequestParam("file") MultipartFile file) {
 //        storageService.store(file);
@@ -19,10 +25,16 @@ public class UploadRest {
 //                "You successfully uploaded " + file.getOriginalFilename() + "!");
 //        return "redirect:/";
         System.out.println(file.getOriginalFilename());
-        // TODO: 2018/12/24 上传到OSS
+        // TODO: 2018/12/29 【暂不实现】上传到OSS
         return RestResult.ok("https://tvax2.sinaimg.cn/crop.62.10.182.182.180/b992234fly8foofgubgaqj2094094dg7.jpg");
     }
 
+    /**
+     * 用户上传 图片
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/image")
     public RestResult image(@RequestParam("file") MultipartFile file) {
 //        storageService.store(file);
@@ -30,10 +42,16 @@ public class UploadRest {
 //                "You successfully uploaded " + file.getOriginalFilename() + "!");
 //        return "redirect:/";
         System.out.println(file.getOriginalFilename());
-        // TODO: 2018/12/24 上传到OSS
+        // TODO: 2018/12/29 【暂不实现】上传到OSS
         return RestResult.ok("https://tvax2.sinaimg.cn/crop.62.10.182.182.180/b992234fly8foofgubgaqj2094094dg7.jpg");
     }
 
+    /**
+     * 用户上传 视频
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/video")
     public RestResult video(@RequestParam("file") MultipartFile file) {
 //        storageService.store(file);
@@ -41,7 +59,7 @@ public class UploadRest {
 //                "You successfully uploaded " + file.getOriginalFilename() + "!");
 //        return "redirect:/";
         System.out.println(file.getOriginalFilename());
-        // TODO: 2018/12/24 上传到OSS
+        // TODO: 2018/12/29 【暂不实现】上传到OSS
         return RestResult.ok("https://img-9gag-fun.9cache.com/photo/a8333K3_460svvp9.mp4");
     }
 

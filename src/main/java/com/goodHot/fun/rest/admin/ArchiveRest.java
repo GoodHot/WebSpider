@@ -19,12 +19,26 @@ public class ArchiveRest {
     @Autowired
     private ArchiveService archiveService;
 
+    /**
+     * 列表
+     *
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
     @GetMapping("/page/{index}_{size}")
     public RestResult page(@PathVariable("index") Integer pageIndex, @PathVariable("size") Integer pageSize) {
         Page<Archive> page = archiveService.page(pageIndex, pageSize);
         return RestResult.ok(page);
     }
 
+    /**
+     * 通过
+     *
+     * @param id
+     * @param status
+     * @return
+     */
     @PostMapping("/approval/{id}")
     public RestResult approval(@PathVariable("id") String id, Integer status) {
         ArchiveEnum.Status statusEnum = ArchiveEnum.Status.find(status);
@@ -32,11 +46,23 @@ public class ArchiveRest {
         return RestResult.ok(archiveService.approval(id, statusEnum));
     }
 
+    /**
+     * 跳过，暂不处理
+     *
+     * @param archive
+     * @return
+     */
     @PostMapping("/pass")
     public RestResult pass(@RequestBody ArchivePassReq archive) {
         return RestResult.ok(archiveService.pass(archive));
     }
 
+    /**
+     * 未通过
+     *
+     * @param id
+     * @return
+     */
     @PostMapping("/rejected/{id}")
     public RestResult rejected(@PathVariable("id") String id) {
         return RestResult.ok(archiveService.rejected(id));
