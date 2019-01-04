@@ -1,6 +1,7 @@
 package com.goodHot.fun.service.impl;
 
 import com.goodHot.fun.conf.PostConfig;
+import com.goodHot.fun.conf.UpYunConfig;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
@@ -32,23 +33,17 @@ public class ProcessServiceImpl implements ProcessService {
     @Autowired
     private UpYunUtil upYunUtil;
 
-    // 放在upyun的路径
-    @Value("${upyun.bucket.coub}")
-    private String upYunCoubPath;
-
-    @Value("${upyun.bucket.jpeg}")
-    private String upYunJPEGPath;
-
-    @Value("${upyun.bucket.mp4}")
-    private String upYunMP4Path;
+    @Autowired
+    private UpYunConfig upYunConfig;
 
     @Override
+
     public void mp4(MP4Media media) throws IOException, UpException {
         String videoPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix);
         String posterPath = download(media.getPosterUrl(), Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix);
         // TODO: 2018/12/18 添加水印
-        media.setUrl(upYunUtil.upload(videoPath, upYunMP4Path));
-        media.setPosterUrl(upYunUtil.upload(posterPath, upYunMP4Path));
+        media.setUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().getMp4()));
+        media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().getMp4()));
 
     }
 
@@ -56,7 +51,7 @@ public class ProcessServiceImpl implements ProcessService {
     public void jpeg(JPEGMedia media) throws IOException, UpException {
         String imgPath = download(media.getUrl(), Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix);
         // TODO: 2018/12/18 添加水印
-        media.setUrl(upYunUtil.upload(imgPath, upYunJPEGPath));
+        media.setUrl(upYunUtil.upload(imgPath, upYunConfig.getBucket().getJpeg()));
     }
 
     @Override
@@ -64,12 +59,12 @@ public class ProcessServiceImpl implements ProcessService {
         String videoPath = download(media.getVideoURL(), Encrypts.md5(media.getVideoURL()) + MediaEnum.VIDEO.suffix);
         String audioPath = download(media.getAudioURL(), Encrypts.md5(media.getAudioURL()) + MediaEnum.AUDIO.suffix);
         // 解码
-        decodeHandler.decode( new File(videoPath));
+        decodeHandler.decode(new File(videoPath));
         // TODO: 2018/12/18 添加水印
 
         // 上传OSS服务器
-        media.setVideoURL(upYunUtil.upload(videoPath, upYunCoubPath));
-        media.setAudioURL(upYunUtil.upload(audioPath, upYunCoubPath));
+        media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().getCoub()));
+        media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().getCoub()));
 
     }
 
