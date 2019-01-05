@@ -1,0 +1,38 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://192.168.88.109/spiderDB
+      port: 27017
+  redis:
+    host: 192.168.88.109
+    port: 6379
+    database: 0
+
+spider:
+  gag:
+    url: https://9gag.com/v1/group-posts/group/default/type/hot
+  coub:
+    url: https://coub.com/api/v2/timeline/hot/weekly?page=1
+
+api:
+  baidu:
+    translateURL: http://api.fanyi.baidu.com/api/trans/vip/translate?q=%s&from=auto&to=zh&appid=%s&salt=%s&sign=%s
+    appId: 20181128000240516
+    sign: n7rDONXmDEK02bAmeJDI
+
+server:
+  port: 9999
+
+
+post:
+  downloadDir: /my/tmp/downloader/
+
+upyun:
+  bucket:
+    name: jiemen-vedio-upyun
+    coub: /coub
+    jpeg: /jpeg
+    mp4: /mp4
+  operator:
+    name: wang22
+    pwd: 111111hhhhhh
