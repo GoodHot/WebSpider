@@ -64,4 +64,9 @@ public class Post extends BaseDomain {
      */
     private List<AbstractMedia> medias;
 
+    /**
+     * 标签
+     */
+    private List<String> tags;
+
 }
