@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/category")
 @RestController
 @CrossOrigin
-public class CategoryRest {
+public class CategoryAdminRest {
 
     @Autowired
     private CategoryService categoryService;

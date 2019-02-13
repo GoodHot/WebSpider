@@ -8,13 +8,14 @@ import com.goodHot.fun.dto.req.ArchivePassReq;
 import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.exception.ExceptionHelper;
 import com.goodHot.fun.service.ArchiveService;
+import com.goodHot.fun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/archive")
 @RestController
-public class ArchiveRest {
+public class ArchiveAdminRest {
 
     @Autowired
     private ArchiveService archiveService;

@@ -54,4 +54,9 @@ public class Archive extends BaseDomain {
      */
     private List<AbstractMedia> medias;
 
+    /**
+     * 用户ID
+     */
+    private String userId;
+
 }

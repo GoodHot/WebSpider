@@ -56,6 +56,7 @@ public class SpiderServiceImpl implements SpiderService {
                     .run();
             redisTemplate.delete(GAG_RUNNING_LOCK_KEY);
         });
+
         return Boolean.TRUE;
     }
 

@@ -8,4 +8,5 @@ public interface PostService {
     Boolean processTask(ArchiveTask task);
 
     Page<Post> page(String category, int index, int size);
+
 }

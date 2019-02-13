@@ -8,10 +8,7 @@ import com.goodHot.fun.enums.ArchiveEnum;
 import com.goodHot.fun.exception.ExceptionHelper;
 import com.goodHot.fun.repository.ArchiveRepository;
 import com.goodHot.fun.repository.ArchiveTaskRepository;
-import com.goodHot.fun.service.ArchiveService;
-import com.goodHot.fun.service.DownloadService;
-import com.goodHot.fun.service.PostService;
-import com.goodHot.fun.service.TranslateService;
+import com.goodHot.fun.service.*;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,9 @@ public class ArchiveServiceImpl implements ArchiveService {
 
     @Autowired
     private TranslateService translateService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private DownloadService downloadService;
@@ -85,6 +85,7 @@ public class ArchiveServiceImpl implements ArchiveService {
         }
         Archive data = opt.get();
         data.setTranslateTitle(archive.getTitle());
+        data.setUserId(archive.getUserId());
         ArchiveTask task = new ArchiveTask();
         task.setArchive(data);
         task.setCategoryId(archive.getCategory());

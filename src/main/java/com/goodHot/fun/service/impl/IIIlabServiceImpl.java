@@ -31,7 +31,7 @@ public class IIIlabServiceImpl implements IIIlabService {
     }
 
     private IIILab rpc(String link, String site) {
-        String server = "https://service0.iiilab.com/video/web/";
+        String server = "https://service0.iiilab.com/video/web1/";
         String random = random();
         String sign = null;
         String xclientDate = null;
@@ -44,7 +44,7 @@ public class IIIlabServiceImpl implements IIIlabService {
             result = httpCall(reqURL, xclientDate);
             log.info("调用iiilib结果【{}】", result);
         } catch (ScriptException | UnirestException e) {
-            log.error("调用【{}】失败，地址【{}】，异常【{}】", "https://service0.iiilab.com/video/web/", link, e.getMessage());
+            log.error("调用【{}】失败，地址【{}】，异常【{}】", "https://service0.iiilab.com/video/web1/", link, e.getMessage());
             return IIILab.fail();
         }
         if (result == null) {

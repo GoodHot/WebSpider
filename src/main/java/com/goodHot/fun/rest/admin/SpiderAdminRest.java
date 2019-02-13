@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/spider")
 @RestController
 @CrossOrigin(origins = WebsiteConfig.ADMIN_WEBSITE)
-public class SpiderRest {
+public class SpiderAdminRest {
 
     private static final String SWAGGER_TAG = "爬虫";
 

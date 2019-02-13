@@ -13,4 +13,6 @@ public class ArchivePassReq {
 
     private String title;
 
+    private String userId;
+
 }

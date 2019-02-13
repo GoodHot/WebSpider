@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/task")
 @RestController
-public class TaskRest {
+public class TaskAdminRest {
 
     @Autowired
     private ArchiveTaskService archiveTaskService;

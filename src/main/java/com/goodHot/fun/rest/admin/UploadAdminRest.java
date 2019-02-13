@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/upload")
 @RestController
-public class UploadRest {
+public class UploadAdminRest {
 
     /**
      * 用户上传头像

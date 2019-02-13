@@ -1,4 +1,4 @@
-package com.goodHot.fun.rest.web;
+package com.goodHot.fun.rest.web1;
 
 import com.goodHot.fun.common.RestResult;
 import org.springframework.web.bind.annotation.PostMapping;

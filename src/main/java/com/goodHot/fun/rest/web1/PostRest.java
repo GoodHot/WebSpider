@@ -1,44 +1,42 @@
-package com.goodHot.fun.rest.web;
+package com.goodHot.fun.rest.web1;
 
 import com.goodHot.fun.common.RestResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 内容
+ */
 @RestController
-@RequestMapping("user")
-public class UserRest {
+@RequestMapping("post")
+public class PostRest {
 
     /**
-     * 修改头像
-     *
+     * 热门
      * @return
      */
-    @PostMapping("avatar")
-    public RestResult avatar() {
+    @PostMapping("hot/{page}")
+    public RestResult hot() {
         return RestResult.ok();
     }
 
     /**
-     * 修改昵称
-     *
+     * 最新
      * @return
      */
-    @PutMapping("nickname")
-    public RestResult nickname() {
+    @PostMapping("fresh/{page}")
+    public RestResult fresh() {
         return RestResult.ok();
     }
 
     /**
-     * 获取用户
-     *
+     * 详情
      * @return
      */
-    @PutMapping("/{get}")
+    @PostMapping("/detail/{id}")
     public RestResult get() {
         return RestResult.ok();
     }
-
 
 }

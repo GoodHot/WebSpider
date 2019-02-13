@@ -32,6 +32,7 @@ upyun:
     name: jiemen-vedio-upyun
     coub: /coub
     jpeg: /jpeg
+    mp4: /video
   operator:
-    name: wang22
-    pwd: 111111hhhhhh
+    name: deeese
+    pwd: 1q2w3e4rds

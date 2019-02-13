@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/collect")
 @RestController
 @CrossOrigin(origins = WebsiteConfig.ADMIN_WEBSITE)
-public class CollectRest {
+public class CollectAdminRest {
 
     @Autowired
     private CollectService collectService;
