@@ -1,4 +1,4 @@
-package com.goodHot.fun.rest.web1;
+package com.goodHot.fun.rest.web;
 
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;

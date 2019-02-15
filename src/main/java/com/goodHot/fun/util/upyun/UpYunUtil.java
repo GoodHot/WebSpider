@@ -28,10 +28,10 @@ public class UpYunUtil {
         upYun.setContentMD5(UpYun.md5(file));
         Boolean isUploadOk = upYun.writeFile(upYunPath, file, true);
         if (isUploadOk) {
-            return upYunPath + "/" + file.getName();
+            return upYunPath;
         } else {
             ExceptionHelper.param(!isUploadOk, "上传upyun失败: {}", localFilePath);
-            return "";
+            return null;
         }
     }
 }

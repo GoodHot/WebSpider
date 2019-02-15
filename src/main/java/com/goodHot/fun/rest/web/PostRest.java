@@ -1,6 +1,12 @@
-package com.goodHot.fun.rest.web1;
+package com.goodHot.fun.rest.web;
 
 import com.goodHot.fun.common.RestResult;
+import com.goodHot.fun.conf.WebsiteConfig;
+import com.goodHot.fun.domain.Post;
+import com.goodHot.fun.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,20 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
  * 内容
  */
 @RestController
-@RequestMapping("post")
+@RequestMapping(WebsiteConfig.WEB_PREFIX + "/post")
 public class PostRest {
+
+    @Autowired
+    private PostService postService;
 
     /**
      * 热门
+     *
      * @return
      */
-    @PostMapping("hot/{page}")
+    @GetMapping("hot/{page}")
     public RestResult hot() {
-        return RestResult.ok();
+        Page<Post> pager = postService.page("all", 1, 20);
+        return RestResult.ok(pager);
     }
 
     /**
      * 最新
+     *
      * @return
      */
     @PostMapping("fresh/{page}")
@@ -32,6 +44,7 @@ public class PostRest {
 
     /**
      * 详情
+     *
      * @return
      */
     @PostMapping("/detail/{id}")

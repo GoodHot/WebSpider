@@ -31,7 +31,7 @@ public class IIIlabServiceImpl implements IIIlabService {
     }
 
     private IIILab rpc(String link, String site) {
-        String server = "https://service0.iiilab.com/video/web1/";
+        String server = "https://service0.iiilab.com/video/web/";
         String random = random();
         String sign = null;
         String xclientDate = null;
@@ -44,7 +44,7 @@ public class IIIlabServiceImpl implements IIIlabService {
             result = httpCall(reqURL, xclientDate);
             log.info("调用iiilib结果【{}】", result);
         } catch (ScriptException | UnirestException e) {
-            log.error("调用【{}】失败，地址【{}】，异常【{}】", "https://service0.iiilab.com/video/web1/", link, e.getMessage());
+            log.error("调用【{}】失败，地址【{}】，异常【{}】", "https://service0.iiilab.com/video/web/", link, e.getMessage());
             return IIILab.fail();
         }
         if (result == null) {
@@ -60,9 +60,8 @@ public class IIIlabServiceImpl implements IIIlabService {
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", "zh-CN,zh;q=0.9")
                 .header("Connection", "keep-alive")
-//                .header("Content-Length", "74")
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .header("Cookie", "iii_Session=91pi0gvosfaqamgj8lr3sptbj3; _ga=GA1.2.1211182193.1545792266; _gid=GA1.2.439920918.1545792266; _gsp=GA3d5749de6751f74f; _gat=1; PHPSESSIID=311701951545")
+                .header("Cookie", "_ga=GA1.2.1211182193.1545792266; iii_Session=jr5n5fpeksafu436gjtffkafu5; PHPSESSIID=652821550124; _gid=GA1.2.1564581692.1550125283; _gat=1; _gsp=GAea59d791c02208f1")
                 .header("Host", "service0.iiilab.com")
                 .header("Origin", "https://douyin.iiilab.com")
                 .header("Referer", "https://douyin.iiilab.com/")

@@ -29,7 +29,7 @@ post:
 
 upyun:
   bucket:
-    name: jiemen-vedio-upyun
+    name: assets-jiemen
     coub: /coub
     jpeg: /jpeg
     mp4: /video
