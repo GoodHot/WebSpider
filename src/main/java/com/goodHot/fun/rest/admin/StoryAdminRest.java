@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
-import com.goodHot.fun.domain.Collect;
+import com.goodHot.fun.domain.Story;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.domain.media.TextMedia;
 import com.goodHot.fun.enums.MediaEnum;
-import com.goodHot.fun.service.CollectService;
+import com.goodHot.fun.service.StoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/collect")
+@RequestMapping(WebsiteConfig.ADMIN_PREFIX + "/story")
 @RestController
 @CrossOrigin(origins = WebsiteConfig.ADMIN_WEBSITE)
-public class CollectAdminRest {
+public class StoryAdminRest {
 
     @Autowired
-    private CollectService collectService;
+    private StoryService storyService;
 
     /**
      * 合集 新增
@@ -37,7 +37,7 @@ public class CollectAdminRest {
      */
     @PostMapping
     public RestResult add(@RequestBody String body) {
-        Collect collect = new Collect();
+        Story collect = new Story();
         // TODO: 2018/12/27 保存当前用户信息 collect.setUserId
         JSONObject json = JSON.parseObject(body);
         collect.setTitle(json.getString("title"));
@@ -49,7 +49,7 @@ public class CollectAdminRest {
             medias.add(convertMedia(obj));
         }
         collect.setMedias(medias);
-        return RestResult.ok(collectService.insert(collect));
+        return RestResult.ok(storyService.insert(collect));
     }
 
     /**
@@ -61,7 +61,7 @@ public class CollectAdminRest {
      */
     @GetMapping("/page/{index}_{size}")
     public RestResult list(@PathVariable("index") Integer pageIndex, @PathVariable("size") Integer pageSize) {
-        Page<Collect> page = collectService.page(pageIndex, pageSize);
+        Page<Story> page = storyService.page(pageIndex, pageSize);
         return RestResult.ok(page);
     }
 

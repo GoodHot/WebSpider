@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @ToString
-public class Collect extends BaseDomain {
+public class Story extends BaseDomain {
 
     private String title;
 
@@ -25,6 +25,8 @@ public class Collect extends BaseDomain {
     private Integer like;
 
     private Integer dislike;
+
+    private Integer views;
 
     private Integer comments;
 
