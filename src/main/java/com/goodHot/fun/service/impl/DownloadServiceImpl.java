@@ -57,7 +57,7 @@ public class DownloadServiceImpl implements DownloadService {
             List<String> urls = Lists.newArrayList();
             if (media instanceof MP4Media) {
                 MP4Media mp4Media = (MP4Media) media;
-                urls.add(mp4Media.getUrl());
+                urls.add(mp4Media.getVedioUrl());
             } else if (media instanceof JPEGMedia) {
                 JPEGMedia jpegMedia = (JPEGMedia) media;
                 urls.add(jpegMedia.getUrl());

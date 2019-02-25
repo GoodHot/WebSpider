@@ -37,13 +37,13 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public void mp4(MP4Media media) throws IOException, UpException {
-        String videoName = Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix;
+        String videoName = Encrypts.md5(media.getVedioUrl()) + MediaEnum.VIDEO.suffix;
         String posterName = Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix;
-        String videoPath = download(media.getUrl(), videoName);
+        String videoPath = download(media.getVedioUrl(), videoName);
         String posterPath = download(media.getPosterUrl(), posterName);
 
         // TODO: 2018/12/18 添加水印
-        media.setUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
+        media.setVedioUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
         media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().jpegPath(posterName)));
     }
 
@@ -64,7 +64,7 @@ public class ProcessServiceImpl implements ProcessService {
         // 解码
         decodeHandler.decode(new File(videoPath));
         // 添加水印
-        vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         // 上传OSS服务器
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
         media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().coubPath(audioName)));
