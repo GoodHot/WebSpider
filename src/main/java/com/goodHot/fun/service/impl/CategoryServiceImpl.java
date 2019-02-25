@@ -44,6 +44,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findByEName(String ename) {
+        Optional<Category> opt = categoryRepository.findByEName(ename);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    @Override
     public List<Category> getAllByIsShow() {
         return categoryRepository.findByIsShow(Boolean.TRUE);
     }

@@ -16,9 +16,6 @@ public class StoryWebRest {
     @Autowired
     private StoryService collectService;
 
-    @Autowired
-    private CategoryService categoryService;
-
     @GetMapping("/{id}")
     public RestResult get(@PathVariable String id) {
         return RestResult.ok(collectService.get(id));

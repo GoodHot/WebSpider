@@ -14,10 +14,7 @@ import com.goodHot.fun.util.upyun.com.upyun.UpException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -69,8 +66,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<Post> page(String category, int index, int size) {
         Pageable pageable = new PageRequest(index - 1, size, new Sort(Sort.Direction.DESC, "created"));
-        Page<Post> page = postRepository.findAll(pageable);
-        return page;
+        if(category.equals("all")){
+            return postRepository.findAll(pageable);
+        }
+        Category cate = categoryService.findByEName(category);
+        Post post = new Post();
+        post.setCategory(cate);
+        Example<Post> example = Example.of(post);
+
+        return postRepository.findAll(example, pageable);
     }
 
     private void mediaProcessFactory(AbstractMedia media) throws IOException, UpException {
