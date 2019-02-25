@@ -1,6 +1,7 @@
 package com.goodHot.fun.conf;
 
 import com.goodHot.fun.util.Download;
+import com.goodHot.fun.util.VedioWaterMark;
 import com.goodHot.fun.util.upyun.com.UpYun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -50,6 +51,11 @@ public class BeanConfig {
                 upYunConfig.getOperator().getPwd()) {{
             setTimeout(60);
         }};
+    }
+
+    @Bean
+    public VedioWaterMark vedioWaterMark() {
+        return new VedioWaterMark();
     }
 
 }

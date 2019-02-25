@@ -2,6 +2,7 @@ package com.goodHot.fun.util;
 
 import com.goodHot.fun.exception.ExceptionHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 
 
 @Slf4j
+@Component
 public class VedioWaterMark {
     public static final String SYS_PLATFORM = "os.name";
     public static final String SYS_PLATFORM_WINDOWS = "Windows";
@@ -21,7 +23,7 @@ public class VedioWaterMark {
      *
      * @return
      */
-    public static Boolean isWindows() {
+    public Boolean isWindows() {
         return SYS_PLATFORM_WINDOWS.equals(System.getProperty(SYS_PLATFORM));
     }
 
@@ -33,7 +35,7 @@ public class VedioWaterMark {
      * @param outputDir 添加水印后，生成文件
      * @return 添加水印后，生成文件地址
      */
-    public static String waterMarkByFFpemg(String target, String waterMark, String outputDir) throws IOException, InterruptedException {
+    public String waterMarkByFFpemg(String target, String waterMark, String outputDir) throws IOException, InterruptedException {
         ExceptionHelper.param(isWindows(), "请在Linux环境下，视频加水印");
         File targetFile = new File(target);
         ExceptionHelper.param(!targetFile.isFile(), "target是一个文件");
@@ -68,13 +70,13 @@ public class VedioWaterMark {
             log.error(s);
         }
         int exitCode = process.waitFor();
-        ExceptionHelper.param(exitCode != 0, "执行失败");
+        ExceptionHelper.param(exitCode != 0, "添加水印 执行失败");
         return outFilePath;
     }
 
     public static void main(String[] args) {
         try {
-            VedioWaterMark.waterMarkByFFpemg("/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
+            new VedioWaterMark().waterMarkByFFpemg("/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
                     "/Users/yanwenyuan/Downloads/ffmpeg/dou.gif",
                     "/Users/yanwenyuan/Downloads/ffmpeg/");
         } catch (Exception e) {

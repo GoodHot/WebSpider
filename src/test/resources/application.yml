@@ -25,7 +25,7 @@ server:
 
 
 post:
-  downloadDir: /my/tmp/downloader/
+  downloadDir: /tmp/
 
 upyun:
   bucket:

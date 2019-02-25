@@ -52,6 +52,8 @@ public class PostServiceImpl implements PostService {
                     e.printStackTrace();
                 } catch (UpException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             });
         }
@@ -73,7 +75,7 @@ public class PostServiceImpl implements PostService {
         return page;
     }
 
-    private void mediaProcessFactory(AbstractMedia media) throws IOException, UpException {
+    private void mediaProcessFactory(AbstractMedia media) throws IOException, UpException, InterruptedException {
         if (media instanceof MP4Media) {
             processService.mp4((MP4Media) media);
         } else if (media instanceof JPEGMedia) {

@@ -12,5 +12,5 @@ public interface ProcessService {
 
     void jpeg(JPEGMedia media) throws IOException, UpException;
 
-    void coubEmbed(CoubEmbedMedia media) throws IOException, UpException;
+    void coubEmbed(CoubEmbedMedia media) throws IOException, UpException, InterruptedException;
 }

@@ -8,7 +8,7 @@ import java.io.File;
 public interface DecodeHandler {
 
     /**
-     * 解码文件（并不生成新文件）
+     * 解码文件（修改源文件，并不生成新文件）
      * @param file
      */
     void decode(File file);

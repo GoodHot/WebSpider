@@ -7,10 +7,7 @@ import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.enums.MediaEnum;
 import com.goodHot.fun.service.ProcessService;
-import com.goodHot.fun.util.CoubDecodeHandlerImplement;
-import com.goodHot.fun.util.DecodeHandler;
-import com.goodHot.fun.util.Download;
-import com.goodHot.fun.util.Encrypts;
+import com.goodHot.fun.util.*;
 import com.goodHot.fun.util.upyun.UpYunUtil;
 import com.goodHot.fun.util.upyun.com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +32,10 @@ public class ProcessServiceImpl implements ProcessService {
     @Autowired
     private UpYunConfig upYunConfig;
 
-    @Override
+    @Autowired
+    private VedioWaterMark vedioWaterMark;
 
+    @Override
     public void mp4(MP4Media media) throws IOException, UpException {
         String videoName = Encrypts.md5(media.getUrl()) + MediaEnum.VIDEO.suffix;
         String posterName = Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix;
@@ -57,7 +56,7 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public void coubEmbed(CoubEmbedMedia media) throws IOException, UpException {
+    public void coubEmbed(CoubEmbedMedia media) throws IOException, UpException, InterruptedException {
         String videoName = Encrypts.md5(media.getVideoURL()) + MediaEnum.VIDEO.suffix;
         String audioName = Encrypts.md5(media.getAudioURL()) + MediaEnum.AUDIO.suffix;
         String videoPath = download(media.getVideoURL(), videoName);
@@ -65,7 +64,7 @@ public class ProcessServiceImpl implements ProcessService {
         // 解码
         decodeHandler.decode(new File(videoPath));
         // TODO: 2018/12/18 添加水印
-
+        vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         // 上传OSS服务器
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
         media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().coubPath(audioName)));

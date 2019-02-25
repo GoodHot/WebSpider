@@ -11,4 +11,8 @@ public class PostConfig {
 
     private String downloadDir;
 
+    public String getDownloadPath(String fileName) {
+        return this.downloadDir + fileName;
+    }
+
 }
