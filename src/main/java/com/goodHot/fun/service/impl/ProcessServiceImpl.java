@@ -63,7 +63,7 @@ public class ProcessServiceImpl implements ProcessService {
         String audioPath = download(media.getAudioURL(), audioName);
         // 解码
         decodeHandler.decode(new File(videoPath));
-        // TODO: 2018/12/18 添加水印
+        // 添加水印
         vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         // 上传OSS服务器
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
