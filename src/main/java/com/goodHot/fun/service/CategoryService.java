@@ -13,6 +13,8 @@ public interface CategoryService {
 
     Category findById(String categoryId);
 
+    Category findByEName(String ename);
+
     List<Category> getAllByIsShow();
 
 }

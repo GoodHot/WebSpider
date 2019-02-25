@@ -6,10 +6,7 @@ import com.goodHot.fun.domain.Post;
 import com.goodHot.fun.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 内容
@@ -20,6 +17,17 @@ public class PostRest {
 
     @Autowired
     private PostService postService;
+
+    /**
+     * 热门
+     *
+     * @return
+     */
+    @GetMapping("category/{category}")
+    public RestResult category(@PathVariable("category") String category){
+        Page<Post> pager = postService.page(category, 1, 20);
+        return RestResult.ok(pager);
+    }
 
     /**
      * 热门
