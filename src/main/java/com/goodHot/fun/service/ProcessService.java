@@ -8,7 +8,7 @@ import com.goodHot.fun.util.upyun.com.upyun.UpException;
 import java.io.IOException;
 
 public interface ProcessService {
-    void mp4(MP4Media media) throws IOException, UpException;
+    void mp4(MP4Media media) throws IOException, UpException, InterruptedException;
 
     void jpeg(JPEGMedia media) throws IOException, UpException;
 
