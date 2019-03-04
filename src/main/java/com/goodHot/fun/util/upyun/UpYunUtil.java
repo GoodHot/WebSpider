@@ -31,6 +31,24 @@ public class UpYunUtil {
             return upYunPath;
         } else {
             ExceptionHelper.param(!isUploadOk, "上传upyun失败: {}", localFilePath);
+        }
+        return null;
+    }
+
+    /**
+     * @param datas     文件流
+     * @param upYunPath upyun存储路径
+     * @return
+     * @throws IOException
+     * @throws UpException
+     */
+    public String upload(byte[] datas, String upYunPath) throws IOException, UpException {
+        upYun.setContentMD5(UpYun.md5(upYunPath));
+        Boolean isUploadOk = upYun.writeFile(upYunPath, datas, true);
+        if (isUploadOk) {
+            return upYunPath;
+        } else {
+            ExceptionHelper.param(!isUploadOk, "上传upyun失败: {}", upYunPath);
             return null;
         }
     }

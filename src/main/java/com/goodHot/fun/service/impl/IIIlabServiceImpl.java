@@ -61,7 +61,7 @@ public class IIIlabServiceImpl implements IIIlabService {
                 .header("Accept-Language", "zh-CN,zh;q=0.9")
                 .header("Connection", "keep-alive")
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .header("Cookie", "_ga=GA1.2.1211182193.1545792266; iii_Session=jr5n5fpeksafu436gjtffkafu5; PHPSESSIID=629041551084; _gid=GA1.2.165270428.1551082905; _gat=1; _gsp=GA0b947665f6145e69")
+                .header("Cookie", "_ga=GA1.2.1211182193.1545792266; iii_Session=jr5n5fpeksafu436gjtffkafu5; _gid=GA1.2.1991997438.1551257233; _gat=1; _gsp=GA0f4028e9675f898c; PHPSESSIID=325723811556")
                 .header("Host", "service0.iiilab.com")
                 .header("Origin", "https://douyin.iiilab.com")
                 .header("Referer", "https://douyin.iiilab.com/")
