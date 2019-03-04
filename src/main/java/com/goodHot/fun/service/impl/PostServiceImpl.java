@@ -10,7 +10,7 @@ import com.goodHot.fun.service.CategoryService;
 import com.goodHot.fun.service.PostService;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.Times;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.upyun.UpException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

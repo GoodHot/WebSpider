@@ -3,7 +3,7 @@ package com.goodHot.fun;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.service.ProcessService;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.upyun.UpException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

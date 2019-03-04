@@ -8,8 +8,8 @@ import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.enums.MediaEnum;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.*;
-import com.goodHot.fun.util.upyun.UpYunUtil;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.goodHot.fun.util.UpYunUtil;
+import com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,24 +35,29 @@ public class ProcessServiceImpl implements ProcessService {
     @Autowired
     private VedioWaterMark vedioWaterMark;
 
+    @Autowired
+    private PictureWaterMark pictureWaterMark;
+
     @Override
     public void mp4(MP4Media media) throws IOException, UpException, InterruptedException {
         String videoName = Encrypts.md5(media.getVedioUrl()) + MediaEnum.VIDEO.suffix;
         String posterName = Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix;
         String videoPath = download(media.getVedioUrl(), videoName);
         String posterPath = download(media.getPosterUrl(), posterName);
-        // TODO: 2018/12/18 添加水印
+        // 添加水印
         videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         // 上传OSS服务器
         media.setVedioUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
         media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().jpegPath(posterName)));
     }
 
     @Override
-    public void jpeg(JPEGMedia media) throws IOException, UpException {
+    public void jpeg(JPEGMedia media) throws IOException, UpException, InterruptedException {
         String imgName = Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix;
         String imgPath = download(media.getUrl(), imgName);
-        // TODO: 2018/12/18 添加水印
+        // 添加水印
+        pictureWaterMark.waterMarkByImageMagic(imgPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         media.setUrl(upYunUtil.upload(imgPath, upYunConfig.getBucket().jpegPath(imgName)));
     }
 

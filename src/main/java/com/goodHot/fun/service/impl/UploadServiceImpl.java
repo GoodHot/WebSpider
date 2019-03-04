@@ -2,8 +2,8 @@ package com.goodHot.fun.service.impl;
 
 import com.goodHot.fun.service.UploadService;
 import com.goodHot.fun.util.Encrypts;
-import com.goodHot.fun.util.upyun.UpYunUtil;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.goodHot.fun.util.UpYunUtil;
+import com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
