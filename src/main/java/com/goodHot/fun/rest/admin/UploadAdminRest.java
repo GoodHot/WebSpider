@@ -45,8 +45,8 @@ public class UploadAdminRest {
      */
     @PostMapping("/image")
     public RestResult image(@RequestParam("file") MultipartFile file) throws IOException, UpException {
-        String path = uploadService.uploadImage(file.getBytes(), file.getOriginalFilename());
-        return RestResult.ok(path);
+//        String path = uploadService.uploadImage(file.getBytes(), file.getOriginalFilename());
+        return RestResult.ok("https://tvax2.sinaimg.cn/crop.62.10.182.182.180/b992234fly8foofgubgaqj2094094dg7.jpg");
     }
 
     /**

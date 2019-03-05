@@ -37,14 +37,14 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public void mp4(MP4Media media) throws IOException, UpException, InterruptedException {
-        String videoName = Encrypts.md5(media.getVedioUrl()) + MediaEnum.VIDEO.suffix;
+        String videoName = Encrypts.md5(media.getVideoUrl()) + MediaEnum.VIDEO.suffix;
         String posterName = Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix;
-        String videoPath = download(media.getVedioUrl(), videoName);
+        String videoPath = download(media.getVideoUrl(), videoName);
         String posterPath = download(media.getPosterUrl(), posterName);
         // TODO: 2018/12/18 添加水印
         videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
         // 上传OSS服务器
-        media.setVedioUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
+        media.setVideoUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
         media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().jpegPath(posterName)));
     }
 

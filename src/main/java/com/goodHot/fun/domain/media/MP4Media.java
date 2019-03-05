@@ -8,8 +8,8 @@ import lombok.ToString;
 @ToString
 public class MP4Media extends AbstractMedia {
 
-    public MP4Media(String vedioUrl, String posterUrl, Integer width, Integer height, Boolean hasAudio) {
-        this.vedioUrl = vedioUrl;
+    public MP4Media(String videoUrl, String posterUrl, Integer width, Integer height, Boolean hasAudio) {
+        this.videoUrl = videoUrl;
         this.posterUrl = posterUrl;
         this.height = height;
         this.width = width;
@@ -21,7 +21,7 @@ public class MP4Media extends AbstractMedia {
     /**
      * 视频URL
      */
-    private String vedioUrl;
+    private String videoUrl;
     /**
      * 封面图URL
      */

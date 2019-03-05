@@ -27,7 +27,7 @@ public class TestProcessService extends BaseTestsuit {
     @Test
     public void testMp4() {
         MP4Media mp4Media = new MP4Media(){{
-            setVedioUrl("");
+            setVideoUrl("");
             setPosterUrl("");
         }};
     }
