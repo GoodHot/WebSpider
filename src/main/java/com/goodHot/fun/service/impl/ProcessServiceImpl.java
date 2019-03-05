@@ -45,8 +45,10 @@ public class ProcessServiceImpl implements ProcessService {
         String videoPath = download(media.getVedioUrl(), videoName);
         String posterPath = download(media.getPosterUrl(), posterName);
         // 添加水印
-        videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
-        posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        if (false) {
+            videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+            posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        }
         // 上传OSS服务器
         media.setVedioUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
         media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().jpegPath(posterName)));
@@ -57,7 +59,9 @@ public class ProcessServiceImpl implements ProcessService {
         String imgName = Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix;
         String imgPath = download(media.getUrl(), imgName);
         // 添加水印
-        pictureWaterMark.waterMarkByImageMagic(imgPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        if (false) {
+            pictureWaterMark.waterMarkByImageMagic(imgPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        }
         media.setUrl(upYunUtil.upload(imgPath, upYunConfig.getBucket().jpegPath(imgName)));
     }
 
@@ -70,7 +74,9 @@ public class ProcessServiceImpl implements ProcessService {
         // 解码
         decodeHandler.decode(new File(videoPath));
         // 添加水印
-        videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        if (false) {
+            videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png", "/tmp");
+        }
         // 上传OSS服务器
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
         media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().coubPath(audioName)));
