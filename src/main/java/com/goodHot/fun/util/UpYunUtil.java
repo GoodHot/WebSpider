@@ -1,8 +1,8 @@
-package com.goodHot.fun.util.upyun;
+package com.goodHot.fun.util;
 
+import com.UpYun;
 import com.goodHot.fun.exception.ExceptionHelper;
-import com.goodHot.fun.util.upyun.com.UpYun;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

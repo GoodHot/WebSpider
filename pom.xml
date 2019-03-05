@@ -148,6 +148,14 @@
             <version>20140107</version>
         </dependency>
         <!--/rpc call-->
+
+        <!-- 又拍云 -->
+        <dependency>
+            <groupId>com.upyun</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <!-- /又拍云-->
     </dependencies>
 
     <build>

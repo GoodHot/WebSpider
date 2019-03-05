@@ -3,7 +3,7 @@ package com.goodHot.fun.rest.admin;
 import com.goodHot.fun.common.RestResult;
 import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.service.UploadService;
-import com.goodHot.fun.util.upyun.com.upyun.UpException;
+import com.upyun.UpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

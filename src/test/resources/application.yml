@@ -1,10 +1,10 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://192.168.88.109/spiderDB
+      uri: mongodb://localhost/spiderDB
       port: 27017
   redis:
-    host: 192.168.88.109
+    host: localhost
     port: 6379
     database: 0
 
@@ -29,10 +29,10 @@ post:
 
 upyun:
   bucket:
-    name: jiemen-vedio-upyun
+    name: assets-jiemen
     coub: /coub
     jpeg: /jpeg
-    mp4: /mp4
+    mp4: /video
   operator:
-    name: wang22
-    pwd: 111111hhhhhh
+    name: deeese
+    pwd: 1q2w3e4rds
