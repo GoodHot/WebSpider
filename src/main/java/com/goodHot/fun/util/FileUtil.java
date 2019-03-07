@@ -34,10 +34,6 @@ public class FileUtil {
         });
     }
 
-    public File[] local(String path, final String regex) {
-        return local(new File(path), regex);
-    }
-
     /**
      * 递归遍历目标路径，对文件名符合正则的文件，做解码处理
      *
@@ -57,14 +53,6 @@ public class FileUtil {
 
     public void recurseDirsAndHandleFile(String path, final String regex, DecodeHandler decodeHandler) {
         recurseDirsAndHandleFile(new File(path), regex, decodeHandler);
-    }
-
-    public void main(String[] args) {
-        File file = new File("/Users/yanwenyuan/aCode4F/coubMP4Decode/src/main/resources");
-//        System.out.println(JSON.toJSONString(file.list()));
-//        System.out.println(JSON.toJSONString(file.listFiles()));
-
-        System.out.println(JSON.toJSONString(local(file, "^(?!NICE_)[\\s\\S]*.mp4$")));
     }
 
     /**
@@ -177,5 +165,13 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void main(String[] args) {
+        File file = new File("/Users/yanwenyuan/aCode4F/coubMP4Decode/src/main/resources");
+//        System.out.println(JSON.toJSONString(file.list()));
+//        System.out.println(JSON.toJSONString(file.listFiles()));
+
+        System.out.println(JSON.toJSONString(local(file, "^(?!NICE_)[\\s\\S]*.mp4$")));
     }
 }
