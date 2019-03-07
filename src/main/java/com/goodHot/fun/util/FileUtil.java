@@ -35,27 +35,6 @@ public class FileUtil {
     }
 
     /**
-     * 递归遍历目标路径，对文件名符合正则的文件，做解码处理
-     *
-     * @param dir           目标路径
-     * @param regex         匹配文件名
-     * @param decodeHandler 解码操作
-     */
-    public void recurseDirsAndHandleFile(File dir, final String regex, DecodeHandler decodeHandler) {
-        for (File file : local(dir, regex)) {
-            if (file.isFile()) {
-                decodeHandler.decode(file);
-            } else {
-                recurseDirsAndHandleFile(file, regex, decodeHandler);
-            }
-        }
-    }
-
-    public void recurseDirsAndHandleFile(String path, final String regex, DecodeHandler decodeHandler) {
-        recurseDirsAndHandleFile(new File(path), regex, decodeHandler);
-    }
-
-    /**
      * the traditional io way
      * @param filename
      * @return

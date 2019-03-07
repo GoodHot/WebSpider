@@ -10,8 +10,8 @@ import com.goodHot.fun.enums.MediaEnum;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.*;
 import com.upyun.UpException;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -23,9 +23,11 @@ public class ProcessServiceImpl implements ProcessService {
     @Autowired
     private PostConfig postConfig;
 
-    private Download download = new Download();
+    @Autowired
+    private Download download;
 
-    private DecodeHandler decodeHandler = new CoubDecodeHandlerImplement();
+    @Autowired
+    private CoubDecodeHandler decodeHandler;
 
     @Autowired
     private UpYunUtil upYunUtil;
