@@ -20,6 +20,14 @@ public class UpYunConfig {
         private String coub;
         private String jpeg;
         private String mp4;
+        private String collect;
+
+        public String collectPath(String fileName){
+            if (fileName.indexOf("/") == 0) {
+                return collect + "/" + date() + fileName;
+            }
+            return collect + "/" + date() + "/" + fileName;
+        }
 
         public String coubPath(String fileName){
             if (fileName.indexOf("/") == 0) {

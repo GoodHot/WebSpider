@@ -5,6 +5,7 @@ import com.goodHot.fun.conf.WebsiteConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
 import com.goodHot.fun.service.SpiderResourceService;
 import com.goodHot.fun.service.SpiderService;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class SpiderAdminRest {
     }
 
     @GetMapping("resource")
-    public RestResult resource(@RequestParam String url) {
-        return RestResult.ok(spiderResourceService.getResource(url));
+    public RestResult resource(@RequestParam String url) throws UnirestException {
+        return RestResult.ok(spiderResourceService.getResourceByParsevideo(url));
     }
 
 }
