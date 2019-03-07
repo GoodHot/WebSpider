@@ -7,10 +7,10 @@ import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.enums.MediaEnum;
+import com.goodHot.fun.service.DownloadService;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.*;
 import com.upyun.UpException;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,12 +44,15 @@ public class ProcessServiceImpl implements ProcessService {
     @Autowired
     private WatermarkConfig watermarkConfig;
 
+    @Autowired
+    private DownloadService downloadService;
+
     @Override
     public void mp4(MP4Media media) throws IOException, UpException, InterruptedException {
         String videoName = Encrypts.md5(media.getVideoUrl()) + MediaEnum.VIDEO.suffix;
         String posterName = Encrypts.md5(media.getPosterUrl()) + MediaEnum.JPEG.suffix;
-        String videoPath = download(media.getVideoUrl(), videoName);
-        String posterPath = download(media.getPosterUrl(), posterName);
+        String videoPath = downloadService.syncDownloadForURL(media.getVideoUrl(), videoName);
+        String posterPath = downloadService.syncDownloadForURL(media.getPosterUrl(), posterName);
         // 添加水印
         videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
         posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
@@ -61,7 +64,7 @@ public class ProcessServiceImpl implements ProcessService {
     @Override
     public void jpeg(JPEGMedia media) throws IOException, UpException, InterruptedException {
         String imgName = Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix;
-        String imgPath = download(media.getUrl(), imgName);
+        String imgPath = downloadService.syncDownloadForURL(media.getUrl(), imgName);
         // 添加水印
         pictureWaterMark.waterMarkByImageMagic(imgPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
         media.setUrl(upYunUtil.upload(imgPath, upYunConfig.getBucket().jpegPath(imgName)));
@@ -71,8 +74,8 @@ public class ProcessServiceImpl implements ProcessService {
     public void coubEmbed(CoubEmbedMedia media) throws IOException, UpException, InterruptedException {
         String videoName = Encrypts.md5(media.getVideoURL()) + MediaEnum.VIDEO.suffix;
         String audioName = Encrypts.md5(media.getAudioURL()) + MediaEnum.AUDIO.suffix;
-        String videoPath = download(media.getVideoURL(), videoName);
-        String audioPath = download(media.getAudioURL(), audioName);
+        String videoPath = downloadService.syncDownloadForURL(media.getVideoURL(), videoName);
+        String audioPath = downloadService.syncDownloadForURL(media.getAudioURL(), audioName);
         // 解码
         decodeHandler.decode(new File(videoPath));
         // 添加水印
@@ -81,20 +84,5 @@ public class ProcessServiceImpl implements ProcessService {
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
         media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().coubPath(audioName)));
 
-    }
-
-    private String download(String url, String fileName) {
-        String filePath = downloadPath(fileName);
-        try {
-            download.downloadFromUrl(url, filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return filePath;
-    }
-
-    private String downloadPath(String fileName) {
-        return postConfig.getDownloadDir() + fileName;
     }
 }
