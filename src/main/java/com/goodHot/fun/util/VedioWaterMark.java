@@ -1,7 +1,9 @@
 package com.goodHot.fun.util;
 
+import com.goodHot.fun.conf.WatermarkConfig;
 import com.goodHot.fun.exception.ExceptionHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -16,6 +18,9 @@ public class VedioWaterMark {
     public static final String SYS_PLATFORM = "os.name";
     public static final String SYS_PLATFORM_WINDOWS = "Windows";
     public static final String SYS_PLATFORM_MAC = "Mac OS X";
+
+    @Autowired
+    private WatermarkConfig watermarkConfig;
 
 
     /**
@@ -36,6 +41,10 @@ public class VedioWaterMark {
      * @return 添加水印后，生成文件地址
      */
     public String waterMarkByFFpemg(String target, String waterMark, String outputDir) throws IOException, InterruptedException {
+        if (!watermarkConfig.getActive()) {
+            log.debug("视频 添加水印 【关闭】");
+            return target;
+        }
         ExceptionHelper.param(isWindows(), "请在Linux环境下，视频加水印");
         File targetFile = new File(target);
         ExceptionHelper.param(!targetFile.isFile(), "target是一个文件");
@@ -55,6 +64,7 @@ public class VedioWaterMark {
             // 文件存在，返回
             return outFilePath;
         }
+        log.debug("视频水印命令：ffmpeg -i " + target + " -i " + waterMark + "-filter_complex overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)' " + outFilePath);
         processBuilder.command("ffmpeg", "-i", target,
                 "-i", waterMark,
                 "-filter_complex", "overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)'",

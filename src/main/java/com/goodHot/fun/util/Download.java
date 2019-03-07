@@ -1,12 +1,14 @@
 package com.goodHot.fun.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
 @Slf4j
+@Component
 public class Download {
 
     public static final int BUFFER_SIZE = 1024;

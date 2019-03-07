@@ -43,7 +43,7 @@ public class UpYunUtil {
      * @throws UpException
      */
     public String upload(byte[] datas, String upYunPath) throws IOException, UpException {
-        upYun.setContentMD5(UpYun.md5(upYunPath));
+//        upYun.setContentMD5(UpYun.md5(upYunPath));
         Boolean isUploadOk = upYun.writeFile(upYunPath, datas, true);
         if (isUploadOk) {
             return upYunPath;

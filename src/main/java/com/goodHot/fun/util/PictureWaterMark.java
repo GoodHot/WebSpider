@@ -1,7 +1,9 @@
 package com.goodHot.fun.util;
 
+import com.goodHot.fun.conf.WatermarkConfig;
 import com.goodHot.fun.exception.ExceptionHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -17,6 +19,8 @@ public class PictureWaterMark {
     public static final String SYS_PLATFORM_WINDOWS = "Windows";
     public static final String SYS_PLATFORM_MAC = "Mac OS X";
 
+    @Autowired
+    private WatermarkConfig watermarkConfig;
 
     /**
      * 是否是windows操作系统
@@ -36,6 +40,10 @@ public class PictureWaterMark {
      * @return 添加水印后，生成文件地址
      */
     public String waterMarkByImageMagic(String target, String waterMark, String outputDir) throws IOException, InterruptedException {
+        if (!watermarkConfig.getActive()) {
+            log.debug("图片 添加水印 【关闭】");
+            return target;
+        }
         ExceptionHelper.param(isWindows(), "请在Linux环境下，图片加水印");
         File targetFile = new File(target);
         ExceptionHelper.param(!targetFile.isFile(), "target是一个文件");
