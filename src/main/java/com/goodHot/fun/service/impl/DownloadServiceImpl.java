@@ -1,5 +1,6 @@
 package com.goodHot.fun.service.impl;
 
+import com.goodHot.fun.conf.PostConfig;
 import com.goodHot.fun.domain.media.AbstractMedia;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.JPEGMedia;
@@ -25,6 +26,9 @@ public class DownloadServiceImpl implements DownloadService {
     private Download download;
 
     private static final ExecutorService EXECUTE_POOL = Executors.newFixedThreadPool(40);
+
+    @Autowired
+    private PostConfig postConfig;
 
     private String downloadPath;
 
@@ -82,5 +86,21 @@ public class DownloadServiceImpl implements DownloadService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String syncDownloadForURL(String url, String fileName) {
+        String filePath = downloadPath(fileName);
+        try {
+            download.downloadFromUrl(url, filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return filePath;
+    }
+
+    private String downloadPath(String fileName) {
+        return postConfig.getDownloadDir() + fileName;
     }
 }

@@ -3,10 +3,12 @@ package com.goodHot.fun.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.goodHot.fun.dto.rpc.IIILab;
 import com.goodHot.fun.service.IIIlabService;
+import com.goodHot.fun.service.PhantomService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.script.ScriptEngine;
@@ -19,6 +21,9 @@ import java.net.URLEncoder;
 public class IIIlabServiceImpl implements IIIlabService {
 
     private ScriptEngineManager manager = new ScriptEngineManager();
+
+    @Autowired
+    private PhantomService phantomService;
 
     @Override
     public IIILab douyin(String url) {
@@ -55,13 +60,14 @@ public class IIIlabServiceImpl implements IIIlabService {
     }
 
     public String httpCall(String url, String xclientDate) throws UnirestException {
+        String cookie = phantomService.getWebCookie("https://douyin.iiilab.com/");
         HttpResponse<String> response = Unirest.post(url)
                 .header("Accept", "application/json, text/javascript, */*; q=0.01")
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", "zh-CN,zh;q=0.9")
                 .header("Connection", "keep-alive")
                 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .header("Cookie", "_ga=GA1.2.1211182193.1545792266; iii_Session=jr5n5fpeksafu436gjtffkafu5; _gid=GA1.2.1991997438.1551257233; _gat=1; _gsp=GA0f4028e9675f898c; PHPSESSIID=325723811556")
+                .header("Cookie", cookie)
                 .header("Host", "service0.iiilab.com")
                 .header("Origin", "https://douyin.iiilab.com")
                 .header("Referer", "https://douyin.iiilab.com/")

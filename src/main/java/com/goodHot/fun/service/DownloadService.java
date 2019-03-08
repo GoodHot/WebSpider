@@ -9,4 +9,6 @@ public interface DownloadService {
     void downloadForURL(String url);
 
     void downloadMedias(List<AbstractMedia> medias);
+
+    String syncDownloadForURL(String url, String fileName);
 }

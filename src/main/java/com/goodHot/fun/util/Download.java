@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 
 @Slf4j
 @Component
@@ -13,8 +14,11 @@ public class Download {
     public static final int BUFFER_SIZE = 1024;
     public static final int EMPTY_BUFFER_FLAG = -1;
 
-    public void downloadFromUrl(String url, String filePath) throws IOException {
-        try (InputStream bufferIn = new BufferedInputStream(new URL(url).openStream());
+    public void downloadFromUrl(String fileUrl, String filePath) throws IOException {
+        URL url = new URL(fileUrl);
+        URLConnection conn = url.openConnection();
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+        try (InputStream bufferIn = new BufferedInputStream(conn.getInputStream());
              ByteArrayOutputStream bufferOut = new ByteArrayOutputStream();
              FileOutputStream fileOutputStream = new FileOutputStream(filePath);) {
 

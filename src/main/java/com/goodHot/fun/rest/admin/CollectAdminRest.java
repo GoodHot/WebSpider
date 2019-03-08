@@ -37,11 +37,13 @@ public class CollectAdminRest {
      */
     @PostMapping
     public RestResult add(@RequestBody String body) {
-        Collect collect = new Collect();
-        // TODO: 2018/12/27 保存当前用户信息 collect.setUserId
         JSONObject json = JSON.parseObject(body);
+        JPEGMedia cover = new JPEGMedia();
+        cover.setUrl(json.getString("cover"));
+
+        Collect collect = new Collect();
         collect.setTitle(json.getString("title"));
-        collect.setCover(convertMedia(json.getJSONObject("cover")));
+        collect.setCover(cover);
         JSONArray mediasJson = json.getJSONArray("medias");
         List<AbstractMedia> medias = new ArrayList<>(mediasJson.size());
         for (int i = 0; i < mediasJson.size(); i++) {

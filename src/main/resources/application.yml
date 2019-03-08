@@ -7,6 +7,10 @@ spring:
     host: localhost
     port: 32768
     database: 0
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 spider:
   gag:
@@ -33,6 +37,10 @@ upyun:
     coub: /coub
     jpeg: /jpeg
     mp4: /video
+    collect: /collect
   operator:
     name: deeese
     pwd: 1q2w3e4rds
+
+phantom:
+  env: /my/dev/java/WebSpider/src/bin/phantomjs

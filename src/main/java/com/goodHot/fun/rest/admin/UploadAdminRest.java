@@ -45,8 +45,8 @@ public class UploadAdminRest {
      */
     @PostMapping("/image")
     public RestResult image(@RequestParam("file") MultipartFile file) throws IOException, UpException {
-//        String path = uploadService.uploadImage(file.getBytes(), file.getOriginalFilename());
-        return RestResult.ok("https://tvax2.sinaimg.cn/crop.62.10.182.182.180/b992234fly8foofgubgaqj2094094dg7.jpg");
+        String path = uploadService.uploadImage(file.getBytes(), file.getOriginalFilename());
+        return RestResult.ok(path);
     }
 
     /**
@@ -61,7 +61,6 @@ public class UploadAdminRest {
 //        redirectAttributes.addFlashAttribute("message",
 //                "You successfully uploaded " + file.getOriginalFilename() + "!");
 //        return "redirect:/";
-        System.out.println(file.getOriginalFilename());
         // TODO: 2018/12/29 【暂不实现】上传到OSS
         return RestResult.ok("https://img-9gag-fun.9cache.com/photo/a8333K3_460svvp9.mp4");
     }
