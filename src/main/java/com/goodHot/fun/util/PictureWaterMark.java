@@ -61,29 +61,10 @@ public class PictureWaterMark {
             // 文件存在，返回
             return outFilePath;
         }
-        processBuilder.command("convert", target, "-compose", "over", waterMark, "-geometry", "50x50+0+0", "-composite", outFilePath);
-        Process process = processBuilder.start();
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String s = "";
-        while ((s = stdInput.readLine()) != null) {
-            log.info(s);
-        }
-        while ((s = stdError.readLine()) != null) {
-            log.error(s);
-        }
-        int exitCode = process.waitFor();
-        ExceptionHelper.param(exitCode != 0, "添加水印 执行失败");
+        int exitCode = ProcessCommandUtil.processCommand("convert", target,
+                "-compose", "over", waterMark,
+                "-geometry", "50x50+0+0", "-composite", outFilePath);
+        ExceptionHelper.param(exitCode != 0, "图片添加水印 执行失败");
         return outFilePath;
-    }
-
-    public static void main(String[] args) {
-        try {
-            new PictureWaterMark().waterMarkByImageMagic("/Users/yanwenyuan/Downloads/JieMen.fun/otter2.jpg",
-                    "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png",
-                    "/Users/yanwenyuan/Downloads/JieMen.fun/");
-        } catch (Exception e) {
-            log.info("Error: " + e);
-        }
     }
 }

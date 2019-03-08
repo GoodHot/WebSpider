@@ -51,9 +51,6 @@ public class VedioWaterMark {
         ExceptionHelper.param(!new File(waterMark).isFile(), "waterMark是一个文件");
         ExceptionHelper.param(!new File(outputDir).isDirectory(), "输出是一个目录");
 
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.directory(new File(outputDir));
-        //  ffmpeg -i likeS.mp4 -i cat.gif -filter_complex "overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)'" likeS_vm.mp4
         outputDir = outputDir.endsWith("/") ? outputDir : outputDir + "/";
         // test.mp4
         String[] targets = targetFile.getName().split("\\.");
@@ -64,33 +61,13 @@ public class VedioWaterMark {
             // 文件存在，返回
             return outFilePath;
         }
-        log.debug("视频水印命令：ffmpeg -i " + target + " -i " + waterMark + "-filter_complex overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)' " + outFilePath);
-        processBuilder.command("ffmpeg", "-i", target,
+
+        //  ffmpeg -i likeS.mp4 -i cat.gif -filter_complex "overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)'" likeS_vm.mp4
+        int exitCode = ProcessCommandUtil.processCommand("ffmpeg", "-i", target,
                 "-i", waterMark,
                 "-filter_complex", "overlay='if(lte(t,5), 0, main_w-overlay_w)':'if(lte(t,5), 0, main_h-overlay_h)'",
                 outFilePath);
-        Process process = processBuilder.start();
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String s = "";
-        while ((s = stdInput.readLine()) != null) {
-            log.info(s);
-        }
-        while ((s = stdError.readLine()) != null) {
-            log.error(s);
-        }
-        int exitCode = process.waitFor();
-        ExceptionHelper.param(exitCode != 0, "添加水印 执行失败");
+        ExceptionHelper.param(exitCode != 0, "视频 添加水印 执行失败");
         return outFilePath;
-    }
-
-    public static void main(String[] args) {
-        try {
-            new VedioWaterMark().waterMarkByFFpemg("/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
-                    "/Users/yanwenyuan/Downloads/ffmpeg/dou.gif",
-                    "/Users/yanwenyuan/Downloads/ffmpeg/");
-        } catch (Exception e) {
-            log.info("Error: " + e);
-        }
     }
 }
