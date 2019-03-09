@@ -2,7 +2,7 @@ package com.goodHot.fun.conf;
 
 import com.UpYun;
 import com.goodHot.fun.util.Download;
-import com.goodHot.fun.util.VedioWaterMark;
+import com.goodHot.fun.util.VedioUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -54,8 +54,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public VedioWaterMark vedioWaterMark() {
-        return new VedioWaterMark();
+    public VedioUtil vedioUtil() {
+        return new VedioUtil();
     }
 
 }

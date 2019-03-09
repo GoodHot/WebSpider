@@ -6,15 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 @Slf4j
 @Component
-public class VedioWaterMark {
+public class VedioUtil {
     public static final String SYS_PLATFORM = "os.name";
     public static final String SYS_PLATFORM_WINDOWS = "Windows";
     public static final String SYS_PLATFORM_MAC = "Mac OS X";
@@ -58,6 +56,7 @@ public class VedioWaterMark {
         String outFilePath = outputDir + targets[0] + "_wm." + targets[1];
         File outFile = new File(outFilePath);
         if (outFile.exists()) {
+            log.info("视频 添加水印，视频存在：{}", outFilePath);
             // 文件存在，返回
             return outFilePath;
         }

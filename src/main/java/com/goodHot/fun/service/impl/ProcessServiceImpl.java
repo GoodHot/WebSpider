@@ -1,6 +1,5 @@
 package com.goodHot.fun.service.impl;
 
-import com.goodHot.fun.conf.PostConfig;
 import com.goodHot.fun.conf.UpYunConfig;
 import com.goodHot.fun.conf.WatermarkConfig;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
@@ -21,12 +20,6 @@ import java.io.IOException;
 public class ProcessServiceImpl implements ProcessService {
 
     @Autowired
-    private PostConfig postConfig;
-
-    @Autowired
-    private Download download;
-
-    @Autowired
     private CoubDecodeHandler decodeHandler;
 
     @Autowired
@@ -36,7 +29,7 @@ public class ProcessServiceImpl implements ProcessService {
     private UpYunConfig upYunConfig;
 
     @Autowired
-    private VedioWaterMark vedioWaterMark;
+    private VedioUtil vedioUtil;
 
     @Autowired
     private PictureWaterMark pictureWaterMark;
@@ -54,7 +47,7 @@ public class ProcessServiceImpl implements ProcessService {
         String videoPath = downloadService.syncDownloadForURL(media.getVideoUrl(), videoName);
         String posterPath = downloadService.syncDownloadForURL(media.getPosterUrl(), posterName);
         // 添加水印
-        videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
+        videoPath = vedioUtil.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
         posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
         // 上传OSS服务器
         media.setVideoUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
@@ -79,7 +72,7 @@ public class ProcessServiceImpl implements ProcessService {
         // 解码
         decodeHandler.decode(new File(videoPath));
         // 添加水印
-        videoPath = vedioWaterMark.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
+        videoPath = vedioUtil.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
         // 上传OSS服务器
         media.setVideoURL(upYunUtil.upload(videoPath, upYunConfig.getBucket().coubPath(videoName)));
         media.setAudioURL(upYunUtil.upload(audioPath, upYunConfig.getBucket().coubPath(audioName)));

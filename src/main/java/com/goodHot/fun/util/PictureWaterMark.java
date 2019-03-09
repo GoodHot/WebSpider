@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 @Slf4j
@@ -50,8 +48,6 @@ public class PictureWaterMark {
         ExceptionHelper.param(!new File(waterMark).isFile(), "waterMark是一个文件");
         ExceptionHelper.param(!new File(outputDir).isDirectory(), "输出是一个目录");
 
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.directory(new File(outputDir));
         // convert target.jpg -compose over waterMark.png -geometry 50x50+0+0 -composite output.png
         outputDir = outputDir.endsWith("/") ? outputDir : outputDir + "/";
         String[] targets = targetFile.getName().split("\\.");
@@ -59,6 +55,7 @@ public class PictureWaterMark {
         File outFile = new File(outFilePath);
         if (outFile.exists()) {
             // 文件存在，返回
+            log.info("图片 添加水印，文件存在：{}", outFilePath);
             return outFilePath;
         }
         int exitCode = ProcessCommandUtil.processCommand("convert", target,

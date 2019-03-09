@@ -4,7 +4,7 @@ import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.service.ProcessService;
 import com.goodHot.fun.util.PictureWaterMark;
-import com.goodHot.fun.util.VedioWaterMark;
+import com.goodHot.fun.util.VedioUtil;
 import com.upyun.UpException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class TestProcessService extends BaseTestsuit {
     private PictureWaterMark pictureWaterMark;
 
     @Autowired
-    private VedioWaterMark vedioWaterMark;
+    private VedioUtil vedioUtil;
 
     @Test
     public void testCoubEmbed() throws IOException, UpException, InterruptedException {
@@ -49,7 +49,7 @@ public class TestProcessService extends BaseTestsuit {
 
     @Test
     public void testVedioWaterMark() throws IOException, InterruptedException {
-        vedioWaterMark.waterMarkByFFpemg("/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
+        vedioUtil.waterMarkByFFpemg("/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
                 "/Users/yanwenyuan/Downloads/ffmpeg/dou.gif",
                 "/Users/yanwenyuan/Downloads/ffmpeg/");
     }
