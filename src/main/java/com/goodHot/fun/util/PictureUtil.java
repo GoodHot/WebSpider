@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class PictureWaterMark {
+public class PictureUtil {
     public static final String SYS_PLATFORM = "os.name";
     public static final String SYS_PLATFORM_WINDOWS = "Windows";
     public static final String SYS_PLATFORM_MAC = "Mac OS X";

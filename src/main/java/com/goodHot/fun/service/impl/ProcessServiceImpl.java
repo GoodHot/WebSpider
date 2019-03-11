@@ -32,7 +32,7 @@ public class ProcessServiceImpl implements ProcessService {
     private VedioUtil vedioUtil;
 
     @Autowired
-    private PictureWaterMark pictureWaterMark;
+    private PictureUtil pictureUtil;
 
     @Autowired
     private WatermarkConfig watermarkConfig;
@@ -48,7 +48,7 @@ public class ProcessServiceImpl implements ProcessService {
         String posterPath = downloadService.syncDownloadForURL(media.getPosterUrl(), posterName);
         // 添加水印
         videoPath = vedioUtil.waterMarkByFFpemg(videoPath, watermarkConfig.getVedio().getWatermarkPath(), watermarkConfig.getVedio().getOutputDir());
-        posterPath = pictureWaterMark.waterMarkByImageMagic(posterPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
+        posterPath = pictureUtil.waterMarkByImageMagic(posterPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
         // 上传OSS服务器
         media.setVideoUrl(upYunUtil.upload(videoPath, upYunConfig.getBucket().mp4Path(videoName)));
         media.setPosterUrl(upYunUtil.upload(posterPath, upYunConfig.getBucket().jpegPath(posterName)));
@@ -59,7 +59,7 @@ public class ProcessServiceImpl implements ProcessService {
         String imgName = Encrypts.md5(media.getUrl()) + MediaEnum.JPEG.suffix;
         String imgPath = downloadService.syncDownloadForURL(media.getUrl(), imgName);
         // 添加水印
-        pictureWaterMark.waterMarkByImageMagic(imgPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
+        pictureUtil.waterMarkByImageMagic(imgPath, watermarkConfig.getPicture().getWatermarkPath(), watermarkConfig.getPicture().getOutputDir());
         media.setUrl(upYunUtil.upload(imgPath, upYunConfig.getBucket().jpegPath(imgName)));
     }
 

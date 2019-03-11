@@ -3,7 +3,7 @@ package com.goodHot.fun;
 import com.goodHot.fun.domain.media.CoubEmbedMedia;
 import com.goodHot.fun.domain.media.MP4Media;
 import com.goodHot.fun.service.ProcessService;
-import com.goodHot.fun.util.PictureWaterMark;
+import com.goodHot.fun.util.PictureUtil;
 import com.goodHot.fun.util.VedioUtil;
 import com.upyun.UpException;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class TestProcessService extends BaseTestsuit {
     private ProcessService processService;
 
     @Autowired
-    private PictureWaterMark pictureWaterMark;
+    private PictureUtil pictureUtil;
 
     @Autowired
     private VedioUtil vedioUtil;
@@ -34,7 +34,7 @@ public class TestProcessService extends BaseTestsuit {
 
     @Test
     public void testMp4() {
-        MP4Media mp4Media = new MP4Media(){{
+        MP4Media mp4Media = new MP4Media() {{
             setVideoUrl("");
             setPosterUrl("");
         }};
@@ -42,7 +42,7 @@ public class TestProcessService extends BaseTestsuit {
 
     @Test
     public void testPictureWaterMark() throws IOException, InterruptedException {
-        pictureWaterMark.waterMarkByImageMagic("/Users/yanwenyuan/Downloads/JieMen.fun/otter2.jpg",
+        pictureUtil.waterMarkByImageMagic("/Users/yanwenyuan/Downloads/JieMen.fun/otter2.jpg",
                 "/Users/yanwenyuan/Downloads/JieMen.fun/jm.png",
                 "/Users/yanwenyuan/Downloads/JieMen.fun/");
     }
