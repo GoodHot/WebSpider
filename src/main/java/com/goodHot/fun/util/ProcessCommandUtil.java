@@ -1,10 +1,10 @@
 package com.goodHot.fun.util;
 
-import com.goodHot.fun.exception.ExceptionHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.Arrays;
 
 @Slf4j
 public class ProcessCommandUtil {
@@ -14,7 +14,7 @@ public class ProcessCommandUtil {
      * @param command 带占位符%s的命令
      */
     public static int processCommand(String... command) throws IOException, InterruptedException {
-        log.info("执行命令：" + command);
+        log.info("执行命令：" + Arrays.stream(command).map(i -> i += " ").reduce("", String::concat));
         ProcessBuilder processBuilder = new ProcessBuilder();
         // 设置Process builder的工作路径 为 资源路径
         try {

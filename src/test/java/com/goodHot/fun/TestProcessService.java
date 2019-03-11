@@ -53,4 +53,13 @@ public class TestProcessService extends BaseTestsuit {
                 "/Users/yanwenyuan/Downloads/ffmpeg/dou.gif",
                 "/Users/yanwenyuan/Downloads/ffmpeg/");
     }
+
+    @Test
+    public void testMp4CoverByFFpemg() throws IOException, InterruptedException {
+        vedioUtil.vedioCoverByFFpemg(
+                "/Users/yanwenyuan/Downloads/ffmpeg/likeS.mp4",
+                "00:00:00",
+                "/Users/yanwenyuan/Downloads/ffmpeg"
+        );
+    }
 }
