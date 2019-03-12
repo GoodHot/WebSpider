@@ -1,5 +1,6 @@
 package com.goodHot.fun.service.impl;
 
+import com.goodHot.fun.aop.RedisDistributeLockAnno;
 import com.goodHot.fun.conf.SpiderConfig;
 import com.goodHot.fun.dto.req.SpiderReq;
 import com.goodHot.fun.exception.ExceptionHelper;
@@ -42,6 +43,7 @@ public class SpiderServiceImpl implements SpiderService {
 
     private static final ExecutorService SPIDER_POOL = Executors.newFixedThreadPool(4);
 
+    @RedisDistributeLockAnno(redisLockKey = GAG_RUNNING_LOCK_KEY)
     @Override
     public Boolean startGag(SpiderReq req, ResponseBodyEmitter emitter) {
         String running = redisTemplate.opsForValue().get(GAG_RUNNING_LOCK_KEY);
