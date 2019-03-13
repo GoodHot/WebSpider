@@ -1,3 +1,8 @@
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
+
 spring:
   data:
     mongodb:
@@ -7,6 +12,10 @@ spring:
     host: localhost
     port: 6379
     database: 0
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 spider:
   gag:
@@ -23,6 +32,7 @@ api:
 server:
   port: 9999
 
+
 post:
   downloadDir: /tmp/
 
@@ -32,12 +42,13 @@ upyun:
     coub: /coub
     jpeg: /jpeg
     mp4: /video
+    collect: /collect
   operator:
     name: deeese
     pwd: 1q2w3e4rds
 
 watermark:
-  active: true
+  active: false
   picture:
     # 缺省watermarkPath，空字符串，默认使用 /resources/watermark/jm.png 水印文件
     watermarkPath: ''
@@ -46,3 +57,6 @@ watermark:
     # 缺省watermarkPath，空字符串，默认使用 /resources/watermark水印文件
     watermarkPath: ''
     outputDir: /tmp/
+
+phantom:
+  env: /my/dev/java/WebSpider/src/bin/phantomjs
