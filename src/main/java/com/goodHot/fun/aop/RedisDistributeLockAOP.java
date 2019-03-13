@@ -24,26 +24,28 @@ public class RedisDistributeLockAOP {
     private RedisScript<Boolean> defaultRedisScript;
 
     @Autowired
-    private RedisTemplate lockRedisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 获取锁
+     *
      * @param redisKey
      * @return
      */
     public Boolean getRedisLock(String redisKey) {
         // lua 实现
         log.info("redis lock: " + redisKey);
-        return (Boolean) lockRedisTemplate.execute(defaultRedisScript, Collections.singletonList(redisKey), "");
+        return redisTemplate.execute(defaultRedisScript, Collections.singletonList(redisKey), "");
     }
 
     /**
      * 释放锁
+     *
      * @param redisKey
      */
     public void releaseRedisLock(String redisKey) {
         log.info("redis release: " + redisKey);
-        lockRedisTemplate.delete(redisKey);
+        redisTemplate.delete(redisKey);
     }
 
     @Around("@annotation(redisDistributeLockAnno)")
