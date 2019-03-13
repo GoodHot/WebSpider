@@ -57,7 +57,7 @@ public class RedisDistributeLockAOP {
             throwable.printStackTrace();
         } finally {
             // 释放锁
-//            releaseRedisLock(redisDistributeLockAnno.redisLockKey());
+            releaseRedisLock(redisDistributeLockAnno.redisLockKey());
             return v;
         }
     }
