@@ -58,20 +58,17 @@ public class SpiderServiceImpl implements SpiderService {
         return Boolean.TRUE;
     }
 
+    @RedisDistributeLockAnno(redisLockKey = COUB_RUNNING_LOCK_KEY)
     @Override
     public Boolean startCoub(SpiderReq req, ResponseBodyEmitter emitter) {
-        String running = redisTemplate.opsForValue().get(COUB_RUNNING_LOCK_KEY);
-        ExceptionHelper.param(running != null, "COUB爬虫正在运行");
         SPIDER_POOL.execute(() -> {
-            redisTemplate.opsForValue().set(COUB_RUNNING_LOCK_KEY, "running");
             Spider.create(new CoubPageProcessor(req.getSize(), emitter))
                     .setDownloader(new JSONDownloader())
                     .setPipelines(Lists.newArrayList(new CoubPipeline(spiderIndexRepository, archiveService, emitter)))
                     .addUrl(config.getCoub().getUrl())
                     .thread(1)
                     .run();
-            redisTemplate.delete(COUB_RUNNING_LOCK_KEY);
         });
-        return null;
+        return Boolean.TRUE;
     }
 }
