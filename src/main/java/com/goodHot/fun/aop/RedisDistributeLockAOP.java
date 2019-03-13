@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
@@ -16,34 +17,36 @@ import java.util.Collections;
  */
 @Aspect
 @Slf4j
+@Component
 public class RedisDistributeLockAOP {
 
     @Autowired
     private RedisScript<Boolean> defaultRedisScript;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate lockRedisTemplate;
 
     /**
      * 获取锁
      * @param redisKey
      * @return
      */
-    private Boolean getRedisLock(String redisKey) {
+    public Boolean getRedisLock(String redisKey) {
         // lua 实现
         log.info("redis lock: " + redisKey);
-        return (Boolean) redisTemplate.execute(defaultRedisScript, Collections.singletonList(redisKey), "");
+        return (Boolean) lockRedisTemplate.execute(defaultRedisScript, Collections.singletonList(redisKey), "");
     }
 
     /**
      * 释放锁
      * @param redisKey
      */
-    private void releaseRedisLock(String redisKey) {
-        redisTemplate.delete(redisKey);
+    public void releaseRedisLock(String redisKey) {
+        log.info("redis release: " + redisKey);
+        lockRedisTemplate.delete(redisKey);
     }
 
-    @Around("@annotation(RedisDistributeLockAnno)")
+    @Around("@annotation(redisDistributeLockAnno)")
     public Object getAndReleaseLock(ProceedingJoinPoint proceedingJoinPoint, RedisDistributeLockAnno redisDistributeLockAnno) {
         // 获取锁
         ExceptionHelper.param(false == getRedisLock(redisDistributeLockAnno.redisLockKey()), "获取锁失败");
@@ -54,7 +57,7 @@ public class RedisDistributeLockAOP {
             throwable.printStackTrace();
         } finally {
             // 释放锁
-            releaseRedisLock(redisDistributeLockAnno.redisLockKey());
+//            releaseRedisLock(redisDistributeLockAnno.redisLockKey());
             return v;
         }
     }

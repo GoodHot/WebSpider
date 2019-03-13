@@ -46,17 +46,13 @@ public class SpiderServiceImpl implements SpiderService {
     @RedisDistributeLockAnno(redisLockKey = GAG_RUNNING_LOCK_KEY)
     @Override
     public Boolean startGag(SpiderReq req, ResponseBodyEmitter emitter) {
-        String running = redisTemplate.opsForValue().get(GAG_RUNNING_LOCK_KEY);
-        ExceptionHelper.param(running != null, "GAG爬虫正在运行");
         SPIDER_POOL.execute(() -> {
-            redisTemplate.opsForValue().set(GAG_RUNNING_LOCK_KEY, "running");
             Spider.create(new GagPageProcessor(req.getSize(), emitter))
                     .setDownloader(new JSONDownloader())
                     .setPipelines(Lists.newArrayList(new GagPipeline(spiderIndexRepository, archiveService, emitter)))
                     .addUrl(config.getGag().getUrl())
                     .thread(1)
                     .run();
-            redisTemplate.delete(GAG_RUNNING_LOCK_KEY);
         });
 
         return Boolean.TRUE;
